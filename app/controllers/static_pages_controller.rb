@@ -10,6 +10,7 @@ class StaticPagesController < ApplicationController
     id = DatabaseHelper.sign_in(params[:email]).to_i
     if id > 0
       session[:user_id] = id
+      session[:last_update] = 0
       redirect_to resources_path
     else
       redirect_to action: :signin_error

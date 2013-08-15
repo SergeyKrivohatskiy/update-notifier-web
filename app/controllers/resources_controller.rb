@@ -25,21 +25,15 @@ class ResourcesController < ApplicationController
   end
 
   def show
-    # Display selected resource_info (with changes)
-    # GET	/resources/:tag_id
+    resource_id = params[:id]
+    @resource = DatabaseHelper.get_resource(session[:user_id],resource_id)
+    @tag_string = get_tags_string(@resource)
   end
 
   def edit
     resource_id = params[:id]
     @resource = DatabaseHelper.get_resource(session[:user_id],resource_id)
-
-    all_tags = DatabaseHelper.tags(session[:user_id])
-    tags = all_tags.map do |key, value|
-      value if @resource.tags.include? key
-    end
-    @tag_string = tags.compact.inject('') do |string, tag_name|
-      string+"#{tag_name}; "
-    end
+    @tag_string = get_tags_string(@resource)
   end
 
   def update
@@ -84,5 +78,16 @@ class ResourcesController < ApplicationController
     resource.schedule_code = 0
     resource.dom_path = '/'
     resource
+  end
+
+  def get_tags_string(resource)
+    all_tags = DatabaseHelper.tags(session[:user_id])
+    tags = all_tags.map do |key, value|
+      value if resource.tags.include? key
+    end
+    tag_string = tags.compact.inject('') do |string, tag_name|
+      string+"#{tag_name}; "
+    end
+    tag_string
   end
 end

@@ -1,0 +1,12 @@
+<% provide(:title, 'Show resource') %>
+
+<div class="navbar-inner" id="resource info">
+    Resource url: <%= @resource.url %>
+</div>
+<div class="container">
+    <iframe src="<%= @resource.url %>">
+        <p>
+            Your browser does not support iframes.
+        </p>
+    </iframe>
+</div>
