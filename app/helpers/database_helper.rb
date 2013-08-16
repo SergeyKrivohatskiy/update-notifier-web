@@ -94,14 +94,8 @@ module DatabaseHelper
     return {} if array_of_hash.nil?
     hash = {}
     array_of_hash.each do |hash_item|
-      # hash is:
-      # {
-      #   'id': 1
-      #   'name': 'some_name'
-      # }
-      # hash.shift is ['id', 1]
-      key = hash_item.shift.last
-      value = hash_item.shift.last
+      key = hash_item['id']
+      value = hash_item['name']
       hash[key] = value
     end
     hash

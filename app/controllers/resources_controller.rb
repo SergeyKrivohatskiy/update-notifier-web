@@ -39,6 +39,7 @@ class ResourcesController < ApplicationController
   def update
     resource_info = params[:resource]
     resource_info[:id] = params[:id]
+    resource_info[:user_id] = session[:user_id]
     DatabaseHelper.edit_resource(resourceInfoToResource(resource_info))
     redirect_to action: :index
   end
