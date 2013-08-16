@@ -77,7 +77,7 @@ class ResourcesController < ApplicationController
     resource = Resource.new(resource_info)
     resource.user_id = session[:user_id]
     resource.schedule_code = 0
-    resource.dom_path = '/'
+    #resource.dom_path = '/'
     resource
   end
 

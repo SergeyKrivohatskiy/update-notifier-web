@@ -67,8 +67,7 @@ describe DatabaseHelper do
       it 'will be success if adds resource' do
         resource = Resource.new(name: 'test resource',
                                 url: 'http://localhost:8080',
-                                user_id: @user_id,
-                                dom_path: '/')
+                                user_id: @user_id)
         @id = DatabaseHelper.add_resource(resource)
         @id.should_not == 0
       end
@@ -81,8 +80,7 @@ describe DatabaseHelper do
       before do
         @resource = Resource.new(name: 'test',
                                 url: 'http://localhost:8080',
-                                user_id: @user_id,
-                                dom_path: '/')
+                                user_id: @user_id)
         @resource.id = DatabaseHelper.add_resource(@resource)
       end
       it 'will be success if deletes resource' do
@@ -96,8 +94,7 @@ describe DatabaseHelper do
       before do
         @resource = Resource.new(name: 'test',
                                 url: 'http://localhost:8080',
-                                user_id: @user_id,
-                                dom_path: '/')
+                                user_id: @user_id)
         @resource.id = DatabaseHelper.add_resource(@resource)
       end
       it 'will be success if resource will be edited' do
