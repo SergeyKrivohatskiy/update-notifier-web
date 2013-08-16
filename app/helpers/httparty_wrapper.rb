@@ -1,8 +1,9 @@
 module HTTPartyWrapper
 
   #@address = '172.16.9.215'
-  @address = 'localhost'
-  @port = '8080'
+  @address = ENV['DATABASE_ADDRESS']
+  #@address = 'localhost'
+  #@port = '8080'
 
   def self.address(command, args)
     if args.blank?
@@ -15,7 +16,7 @@ module HTTPartyWrapper
     else
       full_args="?#{args.to_s}"
     end
-    "http://#{@address}:#{@port}/users/#{command}#{full_args}"
+    "http://#{@address}/users/#{command}#{full_args}"
   end
 
   def self.get(command, url_args=nil)
