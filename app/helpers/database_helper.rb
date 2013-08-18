@@ -67,13 +67,23 @@ module DatabaseHelper
     end
   end
 
-  def self.edit_tag(user_id, name)
-    response = HTTPartyWrapper::put("#{user_id}/tags", nil, name)
+  def self.get_tag(user_id,tag_id)
+    response = HTTPartyWrapper::get("#{user_id}/tags/#{tag_id}")
     if WEBrick::HTTPStatus[response.code].new.
         kind_of? WEBrick::HTTPStatus::Success
-      response.parsed_response.to_i
+      Tag.new(response.parsed_response)
     else
-      0
+      nil
+    end
+  end
+
+  def self.edit_tag(tag)
+    response = HTTPartyWrapper::put("#{tag.user_id}/tags/#{tag.id}", nil, tag.name)
+    if WEBrick::HTTPStatus[response.code].new.
+        kind_of? WEBrick::HTTPStatus::Success
+      true
+    else
+      false
     end
   end
 

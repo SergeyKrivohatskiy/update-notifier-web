@@ -53,7 +53,7 @@ class ResourcesController < ApplicationController
     resource_info[:tags] = clean_tags(resource_info[:tags])
 
     # tags - all user tags ({ id: name })
-    tags = session[:tags]
+    tags = session[:tags] || DatabaseHelper.tags(@id)
     # new_tags - resource tags, which no exist in db (only names)
     new_tags = resource_info[:tags] - tags.values
     # old_tags - resource tags, which already exist in db (only names)

@@ -1,8 +1,9 @@
 <% provide(:title, 'Resources') %>
 <h1>Hello!</h1>
-<a href="http://mirgif.com/skachat-linii.htm" title="Танцующие человечки" target="_blank"><img src="http://mirgif.com/razdeliteli/7224.gif" alt="Танцующие человечки" border="0"></a>
+<img src="http://img1.joyreactor.cc/pics/post/гифки-pixel-art-mortal-kombat-dance-754621.gif" alt="Танцующие человечки" border="0">
 <br>
-<%= @id || 'empty email :(' %>
+<%= @id %>
+<%= link_to 'see your tags', tags_path %>
 
 <%= render 'shared/errors' %>
 
@@ -38,10 +39,10 @@
           <% end %>
         </td>
         <td style="text-align: center">
-          <%= link_to 'Edit', edit_resource_url(resource[:id]), :class => 'btn'%>
+          <%= link_to 'Edit', edit_resource_path(resource[:id]), :class => 'btn'%>
         </td>
         <td style="text-align: center">
-          <%= link_to 'Delete', resource_url(resource[:id]),  :method => :delete, :confirm => "Are you sure?", :class => 'btn'%>
+          <%= link_to 'Delete', resource_path(resource[:id]),  :method => :delete, :confirm => "Are you sure?", :class => 'btn'%>
         </td>
       </tr>
     <% end %>
