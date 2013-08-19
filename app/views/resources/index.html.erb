@@ -32,7 +32,7 @@
     <% @resources.each_with_index do |resource, count| %>
       <tr>
         <td><%= count+1 %></td>
-        <td><%= link_to resource[:url], resource[:url] %></td>
+        <td><%= link_to resource[:name], resource[:url] %></td>
         <td>
           <% resource[:tags].each do |tag_id| %>
             <div class="label"><%= @tags[tag_id] %></div>

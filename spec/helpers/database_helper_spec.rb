@@ -131,7 +131,7 @@ describe DatabaseHelper do
       end
       it 'will be success if tag will be edited' do
         @id.should_not == 0
-        DatabaseHelper.edit_tag(@user_id,'another name').should be_true
+        DatabaseHelper.edit_tag(Tag.new({ id: @id, user_id: @user_id, name: 'another name' })).should be_true
       end
       after do
         DatabaseHelper.delete_tag(@user_id, @id)
