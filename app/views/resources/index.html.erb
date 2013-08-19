@@ -1,23 +1,48 @@
 <% provide(:title, 'Resources') %>
 <h1>Hello, <%= @name %>!</h1>
-<img src="http://img1.joyreactor.cc/pics/post/гифки-pixel-art-mortal-kombat-dance-754621.gif" alt="Танцующие человечки" border="0">
+<img src="http://img9.joyreactor.cc/pics/post/игры-BioShock-infinite-Элизабет-няша-624439.gif" alt="Танцующие человечки"/>
+<br/>
+<a href="#new-res-btn" role="button" class="btn" data-toggle="modal">Add resource</a>
+
+<!-- Modal dialog -->
+<div id="new-res-btn" class="modal hide fade" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"
+            aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Edit Introduction</h3>
+  </div>
+  <div class="modal-body">
+    <%= form_for :resource, url: resources_path, html: {
+            class: 'form-horizontal', id: 'new-resource-form' } do |f| %>
+      Add new resource:
+      <% %w[name url tags].each do |item| %>
+        <div class="control-group">
+          <%= f.text_field item.to_sym, placeholder: item.titleize %>
+        </div>
+      <% end %>
+      <!--<%= f.submit 'Add', class: 'btn' %>-->
+    <% end %>
+
+    <!--<form id="InfroText" method="POST">-->
+      <!--<input type="hidden" name="InfroText" value="1">-->
+      <!--<table>-->
+        <!--<tbody><tr><td>Title</td><td><input type="text" name="title" id="title" style="width:300px"><span class="hide help-inline">This is required</span></td></tr>-->
+        <!--<tr><td>Introudction</td><td><textarea name="contect" style="width:300px;height:100px"></textarea></td></tr>-->
+        <!--</tbody></table>-->
+    <!--</form>-->
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" data-dismiss="modal" id="new-res-submit">Save changes</button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>
+
 <br>
 <%= @id %>
 <%= link_to 'see your tags', tags_path %>
 
 <%= render 'shared/errors' %>
-
-<div id="dialog-form">
-  <%= form_for :resource, url: resources_path, html: { class: 'form-horizontal' } do |f| %>
-    Add new resource:
-    <% %w[name url tags].each do |item| %>
-      <div class="control-group">
-        <%= f.text_field item.to_sym, placeholder: item.titleize %>
-      </div>
-    <% end %>
-    <%= f.submit 'Add', class: 'btn' %>
-  <% end %>
-</div>
 
 <table class="table table-bordered table-striped table-condensed">
   <thead>
@@ -39,7 +64,7 @@
           <% end %>
         </td>
         <td style="text-align: center">
-          <%= link_to 'Edit', edit_resource_path(resource[:id]), :class => 'btn'%>
+          <%= link_to 'Edit', edit_resource_path(resource[:id]), { class: 'btn', id: "edit-#{count}" }%>
         </td>
         <td style="text-align: center">
           <%= link_to 'Delete', resource_path(resource[:id]),  :method => :delete, :confirm => "Are you sure?", :class => 'btn'%>
