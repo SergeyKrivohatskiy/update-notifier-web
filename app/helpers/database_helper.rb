@@ -5,8 +5,9 @@ require 'webrick/httpstatus'
 
 module DatabaseHelper
 
-  def self.sign_in(email)
-    response = HTTPartyWrapper::get('signin', { email: email })
+  def self.sign_in(email,name,surname)
+    response = HTTPartyWrapper::get('signin', { email: email,
+                                                name: name, surname: surname })
     if WEBrick::HTTPStatus[response.code].new.
         kind_of? WEBrick::HTTPStatus::Success
       response.parsed_response.to_i

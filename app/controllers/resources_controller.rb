@@ -21,6 +21,7 @@ class ResourcesController < ApplicationController
     @id = session[:user_id]
     session[:tags] = @tags = DatabaseHelper.tags(@id)
     @resources = DatabaseHelper.resources(@id)
+    @name = session[:name][0]
     @resources
   end
 

@@ -1,34 +1,28 @@
-function getEmail() {
+function getName(callback) {
     gapi.client.load('plus', 'v1', function() {
         gapi.client.plus.people.get( {'userId' : 'me'} ).execute(function(resp) {
-            // Shows profile information
-            console.log(resp);
+            callback([resp.name.givenName, resp.name.familyName]);
         })
     });
 }
-function signinCallback(authResult) {
+// Don't call signinCallback from the G+ button!
+function signinCallback2(authResult) {
     if (authResult['access_token']) {
-        // Successfully authorized
-        // Hide the sign-in button now that the user is authorized, for example:
-    document.getElementById('signinButton').setAttribute('style', 'display: none');
-//    var access_token = gapi.auth.getToken().access_token
-//    var id_token = gapi.auth.getToken().id_token
-    gapi.auth.setToken(authResult);
-
+        document.getElementById('signinButton').setAttribute('style', 'display: none');
+        gapi.auth.setToken(authResult);
         gapi.client.load('oauth2', 'v2', function() {
             gapi.client.oauth2.userinfo.get().execute(function(resp) {
-                // Shows user email
-//                console.log(resp.email);
-                var name = resp.name
-                var gender = resp.gender
-                var email = resp.email;
-//                getEmail();
+                getName(function(result_array) {
+                var array = result_array;
                 $('<form action="signin" method="POST">' +
-                    '<input type="hidden" name="email" value="' + email + '">' +
+                    '<input type="hidden" name="email" value="' + resp.email + '">' +
+                    '<input type="hidden" name="name" value="' + array[0] + '">' +
+                    '<input type="hidden" name="surname" value="' + array[1] + '">' +
                     '</form>').submit();
+                });
+
             })
         });
-//    $('#unique').text(tok)
     } else if (authResult['error']) {
 //    document.getElementById('res').setAttribute('style', 'display: none')
         // There was an error.
