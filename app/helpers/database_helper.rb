@@ -16,8 +16,8 @@ module DatabaseHelper
     end
   end
 
-  def self.resources(user_id)
-    response = HTTPartyWrapper::get("#{user_id}/resources")
+  def self.resources(user_id, tags)
+    response = HTTPartyWrapper::get("#{user_id}/resources", tags)
     symbolize(response.parsed_response)
   end
 

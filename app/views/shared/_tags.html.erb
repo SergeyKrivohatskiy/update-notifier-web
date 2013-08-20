@@ -1,0 +1,6 @@
+<h4>Tags:</h4>
+<% @tags.keys.each_with_index do |tag_id, count| %>
+  <div class="label">
+    <%= @tags[tag_id] %>
+  </div>
+<% end %>

@@ -1,6 +1,7 @@
 UpdateNotifierFrontend::Application.routes.draw do
 
   resources :resources
+  get '/filter', to: 'resources#filter'
   resources :tags
 
   root to: 'static_pages#home'
@@ -11,6 +12,8 @@ UpdateNotifierFrontend::Application.routes.draw do
   get '/help', to: "static_pages#help"
 
   get '/contact', to: "static_pages#contact"
+
+  get '/user', to: 'user#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
