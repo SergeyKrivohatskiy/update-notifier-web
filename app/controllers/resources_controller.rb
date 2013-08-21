@@ -13,18 +13,20 @@ class ResourcesController < ApplicationController
     else
       @errors_array = resource.errors.full_messages
     end
-    redirect_to :back, flash: { errors: @errors_array }
+    redirect_to :back, flash: {errors: @errors_array}
 
   end
 
   def index
     # 'Index' page - list of all resources and options
     @errors_array = flash[:errors]
-    @id = session[:user_id]
+    user = session[:user]
+    session[:id] = @id = user[:id]
+    @name = user[:name]
     @tags = DatabaseHelper.tags(@id)
-    @selected_tags = nil # { tags: '1,2,3' }
-    @resources = DatabaseHelper.resources(@id, @selected_tags)
-    @name = session[:name][0]
+    @selected_tags = session[:selected_tags] || []
+    tag_str = tags_to_url(@selected_tags.dup)
+    @resources = DatabaseHelper.resources(@id, (tag_str.blank? ? nil : {tags: tag_str}))
   end
 
   def show
@@ -56,16 +58,27 @@ class ResourcesController < ApplicationController
     redirect_to action: :index
   end
 
-  def filter
+  def filtered_by
     selected_tag = params[:id]
     selected_tags = session[:selected_tags]
-    if selected_tags.include? selected_tag
+    if selected_tags.nil?
+      selected_tags = []
+    end
+    if selected_tags.include?(selected_tag)
       selected_tags.delete selected_tag
     else
       selected_tags.unshift selected_tag
     end
     session[:selected_tags] = selected_tags
-    redirect_to :back, flash: { new_tag: selected_tag }
+    redirect_to :back, flash: {new_tag: selected_tag}
+  end
+
+  def tags_to_url(tags_id_array)
+    return '' if tags_id_array.blank?
+    ft = tags_id_array.shift
+    tags_id_array.inject("#{ft}") do |str, tag|
+      "#{str},#{tag}"
+    end
   end
 
 end

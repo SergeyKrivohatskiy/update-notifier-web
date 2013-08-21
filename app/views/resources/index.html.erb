@@ -17,6 +17,9 @@
 
 <br>
 <%= @id %>
+<% @selected_tags.each do |tag_id| %>
+  <div class="label"><%= link_to @tags[tag_id.to_i], {action: :filtered_by, id: tag_id} %></div>
+<% end %>
 
 <%= render 'shared/errors' %>
 
@@ -36,7 +39,7 @@
       <td><%= link_to resource[:name], resource[:url] %></td>
       <td>
         <% resource[:tags].each do |tag_id| %>
-          <div class="label"><%= link_to @tags[tag_id], {action: :filter, id: tag_id} %></div>
+          <div class="label"><%= link_to @tags[tag_id], {action: :filtered_by, id: tag_id} %></div>
         <% end %>
       </td>
       <td style="text-align: center">

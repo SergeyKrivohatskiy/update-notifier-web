@@ -10,9 +10,9 @@ module DatabaseHelper
                                                 name: name, surname: surname })
     if WEBrick::HTTPStatus[response.code].new.
         kind_of? WEBrick::HTTPStatus::Success
-      response.parsed_response.to_i
+      symbolize([response.parsed_response]).first
     else
-      0
+      nil
     end
   end
 

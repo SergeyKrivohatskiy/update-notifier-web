@@ -7,14 +7,12 @@ class StaticPagesController < ApplicationController
   end
 
   def signin
-    session[:email] = session[:email] || params[:email]
-    session[:name] = [params[:name], params[:surname]]
     params[:name] = CGI::escape(params[:name])
     params[:surname] = CGI::escape(params[:surname])
     #params[:email] = 'cthutq66a@yandex.ru'
-    id = DatabaseHelper.sign_in(params[:email],params[:name], params[:surname]).to_i
-    if id > 0
-      session[:user_id] = id
+    user = DatabaseHelper.sign_in(params[:email],params[:name], params[:surname])
+    if user
+      session[:user] = user
       session[:last_update] = 0
       redirect_to resources_path
     else

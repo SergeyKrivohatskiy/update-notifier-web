@@ -5,18 +5,20 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
   })();
 </script>
-<div style="text-align: center">
-  <h4>Please, sign in:</h4>
-  <span id="signinButton">
-    <span
-    class="g-signin"
-    data-callback="signinCallback2"
-    data-clientid="<%= ENV['CLIENT_ID'] %>"
-    data-cookiepolicy="single_host_origin"
-    data-height='tall'
-    data-requestvisibleactions="http://schemas.google.com/AddActivity"
-    data-scope="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email"
-    data-width='wide'>
+<% content_for :inner_header do %>
+  <div style="text-align: center">
+    <h4>Please, sign in:</h4>
+    <span id="signinButton">
+      <span
+      class="g-signin"
+      data-callback="signinCallback2"
+      data-clientid="<%= ENV['CLIENT_ID'] %>"
+      data-cookiepolicy="single_host_origin"
+      data-height='tall'
+      data-requestvisibleactions="http://schemas.google.com/AddActivity"
+      data-scope="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email"
+      data-width='wide'>
+      </span>
     </span>
-  </span>
-</div>
+  </div>
+<% end %>
