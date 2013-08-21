@@ -1,3 +1,4 @@
+require 'active_record'
 class Tag
   include ActiveRecord::Validations
   include ActiveModel::Validations::Callbacks

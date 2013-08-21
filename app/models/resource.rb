@@ -3,7 +3,7 @@ class Resource
   include ActiveRecord::Validations
   include ActiveModel::Validations::Callbacks
 
-  #before_validation { url[0] = 'http://' unless url.start_with?('http://') }
+  before_validation { url.insert(0,'http://') unless url.start_with?('http://') }
 
   attr_accessor :name, :id, :user_id, :url, :tags, :dom_path, :filter, :schedule_code
 
