@@ -1,4 +1,5 @@
 require 'cgi'
+require 'google/api_client'
 
 class StaticPagesController < ApplicationController
   skip_before_filter :require_login, only: [:home, :signin, :signin_error]
@@ -7,12 +8,28 @@ class StaticPagesController < ApplicationController
   end
 
   def signin
-    session[:email] = session[:email] || params[:email]
-    session[:name] = [params[:name], params[:surname]]
-    params[:name] = CGI::escape(params[:name])
-    params[:surname] = CGI::escape(params[:surname])
-    #params[:email] = 'cthutq66a@yandex.ru'
-    id = DatabaseHelper.sign_in(params[:email],params[:name], params[:surname]).to_i
+
+    client = Google::APIClient.new
+    plus = client.discovered_api('plus')
+    client.authorization.client_id = ENV['CLIENT_ID']
+    client.authorization.client_secret = 'oGTOac49uHQprrlcJrasB1v1'
+    client.authorization.scope = 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email'
+    client.authorization.redirect_uri = signin_url;
+
+    client.authorization.code = params[:code]
+    client.authorization.fetch_access_token!
+
+
+
+    result = client.execute(
+        :api_method => plus.people.get,
+        :parameters => {'userId' => 'me'},
+        :authenticated => true
+    )
+    user_name = result.data['name']
+    session[:email] = session[:email] || 'cthutq66a@yandex.ru'
+    session[:name] = [user_name['given_name'], user_name['family_name']]
+    id = DatabaseHelper.sign_in('cthutq66a@yandex.ru',user_name['given_name'], user_name['family_name']).to_i
     if id > 0
       session[:user_id] = id
       session[:last_update] = 0
