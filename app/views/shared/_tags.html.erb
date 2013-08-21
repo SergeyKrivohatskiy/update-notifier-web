@@ -2,5 +2,10 @@
 <% @tags.keys.each_with_index do |tag_id, count| %>
   <div class="label">
     <%= @tags[tag_id] %>
+    &nbsp
+    <%= link_to '<i class="icon-edit icon-white"></i>'.html_safe,
+                edit_tag_url(tag_id) %>
+    <%= link_to '<i class="icon-remove icon-white"></i>'.html_safe,
+                tag_url(tag_id), method: :delete, confirm: 'Are you sure?' %>
   </div>
 <% end %>

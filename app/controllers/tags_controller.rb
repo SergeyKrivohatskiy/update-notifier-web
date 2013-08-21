@@ -22,7 +22,7 @@ class TagsController < ApplicationController
     #    session[:tags][tag_id] = tag.name if tag_id == tag.id.to_i
     #  end
     #end
-    redirect_to action: :index
+    redirect_to action: :index, controller: :resources
   end
 
 
