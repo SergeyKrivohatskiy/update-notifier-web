@@ -21,7 +21,7 @@ class ResourcesController < ApplicationController
     # 'Index' page - list of all resources and options
     @errors_array = flash[:errors]
     user = session[:user]
-    session[:id] = @id = user[:id]
+    session[:user_id] = @id = user[:id]
     @name = user[:name]
     @tags = DatabaseHelper.tags(@id)
     @selected_tags = session[:selected_tags] || []
