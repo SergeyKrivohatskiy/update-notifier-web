@@ -2,14 +2,23 @@
 <html>
 <head>
   <title><%= full_title(yield(:title)) %></title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div class="container">
-    <%= yield %>
+<%= render 'layouts/header' %>
+<div class="container">
+  <%= yield :inner_header %>
+  <div class="row-fluid">
+    <div class="span3">
+      <%= yield :sidebar %>
+    </div>
+    <div class="span9">
+      <%= yield %>
+    </div>
   </div>
+</div>
 
 </body>
 </html>

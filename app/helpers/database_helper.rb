@@ -10,14 +10,14 @@ module DatabaseHelper
                                                 name: name, surname: surname })
     if WEBrick::HTTPStatus[response.code].new.
         kind_of? WEBrick::HTTPStatus::Success
-      response.parsed_response.to_i
+      symbolize([response.parsed_response]).first
     else
-      0
+      nil
     end
   end
 
-  def self.resources(user_id)
-    response = HTTPartyWrapper::get("#{user_id}/resources")
+  def self.resources(user_id, tags)
+    response = HTTPartyWrapper::get("#{user_id}/resources", tags)
     symbolize(response.parsed_response)
   end
 

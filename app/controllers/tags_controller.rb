@@ -1,7 +1,6 @@
 class TagsController < ApplicationController
   def index
-    @tags = session[:tags] || DatabaseHelper.tags(session[:user_id])
-    p @tags
+    @tags = DatabaseHelper.tags(session[:user_id])
     #GET	/photos	index	отображает список всех фото
   end
 #  GET	/photos/new	new	возвращает форму HTML для создания нового фото
@@ -18,18 +17,18 @@ class TagsController < ApplicationController
     tag.name = params[:tag][:name]
     tag.user_id = session[:user_id]
     result = DatabaseHelper.edit_tag(tag)
-    if result
-      session[:tags].each_pair do |tag_id, tag_name|
-        session[:tags][tag_id] = tag.name if tag_id == tag.id.to_i
-      end
-    end
+    #if result
+    #  session[:tags].each_pair do |tag_id, tag_name|
+    #    session[:tags][tag_id] = tag.name if tag_id == tag.id.to_i
+    #  end
+    #end
     redirect_to action: :index
   end
 
 
   def destroy
     result = DatabaseHelper.delete_tag(session[:user_id], params[:id])
-    session[:tags] = session[:tags].delete(params[:id]) if result
+    #session[:tags] = session[:tags].delete(params[:id]) if result
     redirect_to :back
     #DELETE	/photos/:id	destroy	удаляет определенное фото
   end

@@ -27,11 +27,9 @@ class StaticPagesController < ApplicationController
         :authenticated => true
     )
     user_name = result.data['name']
-    session[:email] = session[:email] || 'cthutq66a@yandex.ru'
-    session[:name] = [user_name['given_name'], user_name['family_name']]
-    id = DatabaseHelper.sign_in('cthutq66a@yandex.ru',user_name['given_name'], user_name['family_name']).to_i
-    if id > 0
-      session[:user_id] = id
+    user = DatabaseHelper.sign_in('cthutq66a@yandex.ru',user_name['given_name'], user_name['family_name'])
+    if user
+      session[:user] = user
       session[:last_update] = 0
       redirect_to resources_path
     else
