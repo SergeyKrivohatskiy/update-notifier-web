@@ -1,9 +1,8 @@
 <h4>Tags:</h4>
 <% @tags.keys.each_with_index do |tag_id, count| %>
   <div class="label">
-    <%= @tags[tag_id] %>
-    &nbsp
-    <%= link_to '<i class="icon-remove icon-white"></i>'.html_safe,
-                tag_delete_path(tag_id), method: :delete %>
+    <%= @tags[tag_id] %>&nbsp<%=
+      link_to '<i class="icon-remove icon-white"></i>'.html_safe,
+              tag_delete_path(tag_id), method: :delete %>
   </div>
 <% end %>

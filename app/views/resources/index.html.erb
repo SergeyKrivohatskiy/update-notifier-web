@@ -19,11 +19,16 @@
 <%= link_to 'Add tag', '#new-tag-btn',
             {role: 'button', class: 'btn', 'data-toggle' => 'modal'} %>
 
-<br>
-<%= @id %>
-<% @selected_tags.each do |tag_id| %>
-  <div class="label"><%= link_to @tags[tag_id.to_i], {action: :filtered_by, id: tag_id} %></div>
-<% end %>
+<div class="selected-tags">
+  <% unless @selected_tags.blank? %>
+    <h4>Filtered by:</h4>
+    <% @selected_tags.each do |tag_id| %>
+      <div class="label label-info"><%= link_to "#{@tags[tag_id.to_i]
+      }&nbsp<i class='icon-remove icon-white' ></i>".html_safe,
+                                                {action: :filtered_by, id: tag_id} %></div>
+    <% end %>
+  <% end %>
+</div>
 
 <%= render 'shared/errors' %>
 
