@@ -25,6 +25,10 @@ class ResourcesController < ApplicationController
     @name = user[:name]
     @tags = DatabaseHelper.tags(@id)
     @selected_tags = session[:selected_tags] || []
+    @selected_tags.each do |item|
+      keys = @tags.keys
+      @selected_tags.delete(item) if !(keys.include? item.to_i)
+    end
     tag_str = tags_to_url(@selected_tags.dup)
     @resources = DatabaseHelper.resources(@id, (tag_str.blank? ? nil : {tags: tag_str}))
   end
