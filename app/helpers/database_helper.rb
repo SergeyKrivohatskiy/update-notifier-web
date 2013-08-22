@@ -58,8 +58,8 @@ module DatabaseHelper
     hashize(response.parsed_response)
   end
 
-  def self.add_tag(user_id, name)
-    response = HTTPartyWrapper::post("#{user_id}/tags", nil, name)
+  def self.add_tag(tag)
+    response = HTTPartyWrapper::post("#{tag.user_id}/tags", nil, tag.name)
     if WEBrick::HTTPStatus[response.code].new.
         kind_of? WEBrick::HTTPStatus::Success
       response.parsed_response.to_i

@@ -114,7 +114,7 @@ describe DatabaseHelper do
 
     describe 'tags addition' do
       it 'will be success if tags will be added' do
-        @id = DatabaseHelper.add_tag(@user_id, 'tag name')
+        @id = DatabaseHelper.add_tag(Tag.new({ user_id: @user_id, name: 'tag name'}))
         @id.should_not == 0
       end
       after { DatabaseHelper.delete_tag(@user_id, @id) if (@id > 0) }
@@ -122,7 +122,7 @@ describe DatabaseHelper do
 
     describe 'tags deletion' do
       before do
-        @id = DatabaseHelper.add_tag(@user_id, 'tag name')
+        @id = DatabaseHelper.add_tag(Tag.new({ user_id: @user_id, name: 'tag name'}))
       end
       it 'will be success if tags will be added' do
         @id.should_not == 0
@@ -132,7 +132,7 @@ describe DatabaseHelper do
 
     describe 'tag edition' do
       before do
-        @id = DatabaseHelper.add_tag(@user_id, 'tag name')
+        @id = DatabaseHelper.add_tag(Tag.new({ user_id: @user_id, name: 'tag name'}))
       end
       it 'will be success if tag will be edited' do
         @id.should_not == 0

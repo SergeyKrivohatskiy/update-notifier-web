@@ -1,0 +1,21 @@
+<div id="new-tag-btn" class="modal hide fade modal-thin" tabindex="-1" role="dialog"
+     aria-labelledby="ModalTagLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"
+            aria-hidden="true">×</button>
+    <h3 id="ModalTagLabel">Add new tag (or tags)</h3>
+  </div>
+  <div class="modal-body">
+    <%= form_for :tag, url: new_tag_path, html: {
+            class: 'form-horizontal', id: 'new-tag-form' } do |f| %>
+      Add new tag (or tags):
+      <div class="control-group">
+        <%= f.text_field :name, placeholder: 'Name' %>
+      </div>
+    <% end %>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" data-dismiss="modal" id="new-tag-submit">Add</button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>

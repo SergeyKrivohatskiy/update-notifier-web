@@ -6,16 +6,18 @@
 
 <% content_for :sidebar do %>
   <div class="sidebar well">
-    <%= render 'shared/tags' %>
+    <%= render 'tags/index' %>
   </div>
 <% end %>
 
 <%= render 'resources/addition' %>
 
+<%= render 'tags/addition' %>
+
 <%= link_to 'Add resource', '#new-res-btn',
             {role: 'button', class: 'btn', 'data-toggle' => 'modal'} %>
-<%= link_to 'See your tags', tags_path, {class: 'btn'} %>
-
+<%= link_to 'Add tag', '#new-tag-btn',
+            {role: 'button', class: 'btn', 'data-toggle' => 'modal'} %>
 
 <br>
 <%= @id %>
