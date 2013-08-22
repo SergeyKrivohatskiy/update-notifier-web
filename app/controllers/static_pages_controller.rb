@@ -21,13 +21,13 @@ class StaticPagesController < ApplicationController
 
 
 
-    result = client.execute(
+    user_name = client.execute(
         :api_method => plus.people.get,
         :parameters => {'userId' => 'me'},
         :authenticated => true
-    )
-    user_name = result.data['name']
-    user = DatabaseHelper.sign_in('cthutq66a@yandex.ru',user_name['given_name'], user_name['family_name'])
+    ).data['name']
+    user_info = HTTParty.get('https://www.googleapis.com/oauth2/v2/userinfo?access_token=' + client.authorization.access_token)
+    user = DatabaseHelper.sign_in(user_info['email'],user_name['given_name'], user_name['family_name'])
     if user
       session[:user] = user
       session[:last_update] = 0
