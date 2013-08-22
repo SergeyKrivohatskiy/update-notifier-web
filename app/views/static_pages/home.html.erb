@@ -1,24 +1,12 @@
-<script type="text/javascript">
-  (function() {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = 'https://apis.google.com/js/client:plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-  })();
-</script>
-<% content_for :inner_header do %>
-  <div style="text-align: center">
-    <h4>Please, sign in:</h4>
-    <span id="signinButton">
-      <span
-      class="g-signin"
-      data-callback="signinCallback2"
-      data-clientid="<%= ENV['CLIENT_ID'] %>"
-      data-cookiepolicy="single_host_origin"
-      data-height='tall'
-      data-requestvisibleactions="http://schemas.google.com/AddActivity"
-      data-scope="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email"
-      data-width='wide'>
-      </span>
-    </span>
-  </div>
-<% end %>
+<div style="text-align: center">
+  <h4>Please, sign in:</h4>
+  <span id="signinButton">
+    <%= link_to 'Sign in', 'https://accounts.google.com/o/oauth2/auth?' +
+        'scope=https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email&' +
+            'state=%2Fprofile&' +
+                'redirect_uri=' + signin_url + '&' +
+                'response_type=code&' +
+                        'client_id=' + ENV['CLIENT_ID'],:class => 'btn'%>
+
+  </span>
+</div>
