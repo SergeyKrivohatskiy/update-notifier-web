@@ -5,6 +5,7 @@ gem 'bootstrap-sass'
 gem 'json'
 gem 'figaro'
 gem 'google-api-client'
+gem 'public_suffix'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

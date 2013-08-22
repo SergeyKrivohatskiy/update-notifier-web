@@ -98,12 +98,12 @@ describe DatabaseHelper do
     describe 'resource edition' do
       before do
         @resource = Resource.new(name: 'test',
-                                url: 'http://localhost:8080',
+                                url: 'http://google.com',
                                 user_id: @user_id)
         @resource.id = DatabaseHelper.add_resource(@resource)
       end
       it 'will be success if resource will be edited' do
-        @resource.url, @resource.name = 'http://127.0.0.1', 'edit test'
+        @resource.url, @resource.name = 'http://google.ru', 'edit test'
         @resource.id.should_not == 0
         DatabaseHelper.edit_resource(@resource).should be_true
       end

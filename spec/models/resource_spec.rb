@@ -4,8 +4,7 @@ require 'spec_helper'
 describe Resource do
 
   before do
-    @resource = Resource.new(name: 'Some name', url: 'http://google.ru',
-                                    tags: ['search', 'favorite', 'GDG'])
+    @resource = Resource.new(name: 'Some name', url: 'http://google.ru')
   end
 
   subject { @resource }
@@ -23,7 +22,8 @@ describe Resource do
   end
 
   describe 'when url should be valid: ' do
-    %w[http://google.ru ].each() do |url|
+    %w[google.ru http://google.ru http://www.google.ru тамтэк.рф
+        http://тамтэк.рф ].each() do |url|
       it "#{url}" do
         @resource.url = url
         should be_valid
@@ -32,7 +32,7 @@ describe Resource do
   end
 
   describe 'when url should not be valid: ' do
-    %w[as.df ].each() do |url|
+    %w[as.df asdf http://asdf http://as.df].each() do |url|
       it "#{url}" do
         @resource.url = url
         should_not be_valid
