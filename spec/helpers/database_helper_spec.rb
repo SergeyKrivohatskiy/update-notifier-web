@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe DatabaseHelper do
-  MAIL = 'mail@post.com'
+  EMAIL = 'mail@post.com'
   NAME = 'Mr.'
   SURNAME = 'X'
 
@@ -56,14 +56,17 @@ describe DatabaseHelper do
 
   describe 'signin' do
     it 'returns something like user id in the response' do
-      user_id = DatabaseHelper.sign_in(MAIL, NAME, SURNAME)
-      user_id.to_i.should be_an Integer
+      user = DatabaseHelper.sign_in(EMAIL, NAME, SURNAME)
+      user[:id].should > 0
+      user[:name].should == NAME
+      user[:surname].should == SURNAME
+      user[:email].should == EMAIL
     end
 
   end
 
   describe 'database operations (without signin); ' do
-    before { @user_id = DatabaseHelper.sign_in(MAIL, NAME, SURNAME) }
+    before { @user_id = DatabaseHelper.sign_in(EMAIL, NAME, SURNAME)[:id] }
 
     describe 'resource addition' do
       it 'will be success if adds resource' do

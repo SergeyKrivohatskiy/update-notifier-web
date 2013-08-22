@@ -5,7 +5,7 @@ class Tag
 
   attr_accessor :id, :user_id, :name
 
-  validates :name, presence: true
+  validates :name, presence: true, length: { maximum: 30 }
 
   def initialize(args = {})
     args.each_pair do |key, value|
