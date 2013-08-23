@@ -2,7 +2,6 @@ UpdateNotifierFrontend::Application.routes.draw do
 
   resources :resources
   get '/filter', to: 'resources#filtered_by'
-  resources :tags
 
   root to: 'static_pages#home'
 
@@ -14,6 +13,9 @@ UpdateNotifierFrontend::Application.routes.draw do
   get '/contact', to: "static_pages#contact"
 
   get '/user', to: 'user#index'
+
+  post '/tags', to: 'tags#create', as: 'new_tag'
+  delete '/tags/:id', to: 'tags#destroy', as:'tag_delete'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

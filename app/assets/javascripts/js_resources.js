@@ -20,3 +20,18 @@ $(function() {
         }
     });
 });
+
+$(function() {
+    $('#new-tag-submit').click(function(){
+        if ($('#tag_name').val()==="") {
+            // invalid
+            $('#tag_name').next('.help-inline').show();
+            return false;
+        } else {
+            // submit the form here
+            // $('#InfroText').submit();
+            $('#new-tag-form').submit();
+            return true;
+        }
+    });
+});

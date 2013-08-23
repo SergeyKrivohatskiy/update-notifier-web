@@ -1,12 +1,16 @@
 class ResourcesController < ApplicationController
   include ResourcesHelper
+  include TagsHelper
 
   def create
     # Create resource
-    resource_info = params[:resource]
     id = session[:user_id]
     tags = DatabaseHelper.tags(id)
-    resource = resourceInfoToResource(resource_info, tags, id)
+    resource_info = params[:resource]
+    resource_info[:tags] = add_new_tags(resource_info[:tags], id)
+    resource = Resource.new(resource_info)
+    resource.user_id = id
+    resource.schedule_code = 0
 
     if resource.valid?
       DatabaseHelper.add_resource(resource)
@@ -50,11 +54,17 @@ class ResourcesController < ApplicationController
 
   def update
     id = session[:user_id]
+    tags = DatabaseHelper.tags(id)
     resource_info = params[:resource]
+    resource_info[:tags] = add_new_tags(resource_info[:tags], id)
     resource_info[:id] = params[:id]
     resource_info[:user_id] = id
-    tags = DatabaseHelper.tags(id)
-    DatabaseHelper.edit_resource(resourceInfoToResource(resource_info, tags, id))
+    resource = Resource.new(resource_info)
+    if resource.valid?
+      DatabaseHelper.edit_resource(resource)
+    else
+      @errors_array = resource.errors.full_messages
+    end
     redirect_to action: :index
   end
 

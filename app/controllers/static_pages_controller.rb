@@ -19,13 +19,13 @@ class StaticPagesController < ApplicationController
     client.authorization.code = params[:code]
     client.authorization.fetch_access_token!
 
-
-
     user_name = client.execute(
         :api_method => plus.people.get,
         :parameters => {'userId' => 'me'},
         :authenticated => true
     ).data['name']
+    user_name['given_name'] = CGI::escape(user_name['given_name'])
+    user_name['family_name'] = CGI::escape(user_name['family_name'])
     user_info = HTTParty.get('https://www.googleapis.com/oauth2/v2/userinfo?access_token=' + client.authorization.access_token)
     user = DatabaseHelper.sign_in(user_info['email'],user_name['given_name'], user_name['family_name'])
     if user
