@@ -15,3 +15,4 @@
 //= require_tree .
 //= require bootbox
 //= require bootstrap-modal
+//= require bootstrap-dropdown

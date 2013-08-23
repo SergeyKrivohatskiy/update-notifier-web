@@ -45,6 +45,7 @@ class ResourcesController < ApplicationController
     id = session[:user_id]
     @resource = DatabaseHelper.get_resource(id, resource_id)
     @tag_string = get_tags_string(@resource, DatabaseHelper.tags(id))
+    @shedule_code = shedule_code_to_s(@resource.schedule_code)
   end
 
   def update
