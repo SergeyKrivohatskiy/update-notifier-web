@@ -15,3 +15,5 @@
 //= require_tree .
 //= require bootbox
 //= require bootstrap-modal
+//= require bootstrap-typeahead
+//= require bootstrap-tooltip

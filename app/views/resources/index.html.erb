@@ -1,13 +1,13 @@
 <% provide(:title, 'Resources') %>
 
 <% content_for :inner_header do %>
-  <h1>Hello, <%= @name %>!</h1>
+    <h1>Hello, <%= @name %>!</h1>
 <% end %>
 
 <% content_for :sidebar do %>
-  <div class="sidebar well">
-    <%= render 'tags/index' %>
-  </div>
+    <div class="sidebar well">
+      <%= render 'tags/index' %>
+    </div>
 <% end %>
 
 <%= render 'resources/addition' %>
@@ -19,16 +19,21 @@
 <%= link_to 'Add tag', '#new-tag-btn',
             {role: 'button', class: 'btn', 'data-toggle' => 'modal'} %>
 
+<br/>
+
 <div class="selected-tags">
-  <% unless @selected_tags.blank? %>
-    <h4>Filtered by:</h4>
-    <% @selected_tags.each do |tag_id| %>
+  <h4>Filtered by:</h4>
+  <% @selected_tags.each do |tag_id| %>
       <div class="label label-info"><%= link_to "#{@tags[tag_id.to_i]
       }&nbsp<i class='icon-remove icon-white' ></i>".html_safe,
                                                 {action: :filtered_by, id: tag_id} %></div>
-    <% end %>
+  <% end %>
+  <%= form_for :tag_search, url: {action: :filtered_by}, html: { method: :get, class: 'form-search' } do %>
+      <%= text_field_tag :tag_string, nil, class: 'search-query input-small',
+                         'data-provide' => 'typeahead', 'data-source' => "#{@tags.values}", rel: 'tooltip' %>
   <% end %>
 </div>
+
 
 <%= render 'shared/errors' %>
 
@@ -43,21 +48,21 @@
   </thead>
   <tbody>
   <% @resources.each_with_index do |resource, count| %>
-    <tr>
-      <td><%= count+1 %></td>
-      <td><%= link_to resource[:name], resource[:url] %></td>
-      <td>
-        <% resource[:tags].each do |tag_id| %>
-          <div class="label"><%= link_to @tags[tag_id], {action: :filtered_by, id: tag_id} %></div>
-        <% end %>
-      </td>
-      <td style="text-align: center">
-        <%= link_to 'Edit', edit_resource_path(resource[:id]), {class: 'btn', id: "edit-#{count}"} %>
-      </td>
-      <td style="text-align: center">
-        <%= link_to 'Delete', resource_path(resource[:id]), :method => :delete, :confirm => "Are you sure?", :class => 'btn' %>
-      </td>
-    </tr>
+      <tr>
+        <td><%= count+1 %></td>
+        <td><%= link_to resource[:name], resource[:url] %></td>
+        <td>
+          <% resource[:tags].each do |tag_id| %>
+              <div class="label"><%= link_to @tags[tag_id], {action: :filtered_by, id: tag_id} %></div>
+          <% end %>
+        </td>
+        <td style="text-align: center">
+          <%= link_to 'Edit', edit_resource_path(resource[:id]), {class: 'btn', id: "edit-#{count}"} %>
+        </td>
+        <td style="text-align: center">
+          <%= link_to 'Delete', resource_path(resource[:id]), :method => :delete, :confirm => "Are you sure?", :class => 'btn' %>
+        </td>
+      </tr>
   <% end %>
   </tbody>
 </table>

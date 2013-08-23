@@ -35,3 +35,13 @@ $(function() {
         }
     });
 });
+
+$(function() {
+    var search_string = $('#tag_string').first();
+    search_string.attr('title', 'Type here to find tag and press Enter');
+    search_string.tooltip({ placement: 'right', trigger: 'manual' });
+    search_string.tooltip('show');
+    search_string.click(function () {
+        $(this).tooltip('hide');
+    });
+});

@@ -73,7 +73,18 @@ class ResourcesController < ApplicationController
   end
 
   def filtered_by
-    selected_tag = params[:id]
+    # TODO make it normal
+
+    if params[:id].to_i > 0
+      selected_tag = params[:id].to_i
+    else
+      tags = DatabaseHelper.tags(session[:user_id])
+      key = tags.keys.select do |key|
+        tags[key] == params[:tag]
+      end
+      selected_tag = key.first
+    end
+
     selected_tags = session[:selected_tags]
     if selected_tags.nil?
       selected_tags = []
