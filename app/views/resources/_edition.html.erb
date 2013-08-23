@@ -10,6 +10,11 @@
     <div class="control-group">
       <%= f.text_field :tags, placeholder: 'Tags', value: @tag_string %>
     </div>
+    <div>
+        <div>Update checking periodicity: </div>
+        <%= f.collection_select :schedule_code,
+                                @schedule_codes, :to_s, :to_s, {:selected => @schedule_code} %>
+    </div>
     <%= f.submit 'Edit', class: 'btn' %>
   <% end %>
 </div>
