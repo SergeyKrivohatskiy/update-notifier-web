@@ -22,6 +22,7 @@ class ResourcesController < ApplicationController
   end
 
   def index
+    @schedule_codes = ResourcesHelper.schedule_codes
     # 'Index' page - list of all resources and options
     @errors_array = flash[:errors]
     user = session[:user]
@@ -49,7 +50,8 @@ class ResourcesController < ApplicationController
     id = session[:user_id]
     @resource = DatabaseHelper.get_resource(id, resource_id)
     @tag_string = get_tags_string(@resource, DatabaseHelper.tags(id))
-    @shedule_code = shedule_code_to_s(@resource.schedule_code)
+    @schedule_codes = ResourcesHelper.schedule_codes
+    @schedule_code = schedule_code_to_s(@resource.schedule_code)
   end
 
   def update
@@ -59,6 +61,7 @@ class ResourcesController < ApplicationController
     resource_info[:tags] = add_new_tags(resource_info[:tags], id)
     resource_info[:id] = params[:id]
     resource_info[:user_id] = id
+    resource_info[:schedule_code] = ResourcesHelper.schedule_codes.index(resource_info[:schedule_code])
     resource = Resource.new(resource_info)
     if resource.valid?
       DatabaseHelper.edit_resource(resource)
