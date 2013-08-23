@@ -8,9 +8,9 @@ class ResourcesController < ApplicationController
     tags = DatabaseHelper.tags(id)
     resource_info = params[:resource]
     resource_info[:tags] = add_new_tags(resource_info[:tags], id)
+    resource_info[:schedule_code] = ResourcesHelper.schedule_codes.index(resource_info[:schedule_code])
     resource = Resource.new(resource_info)
     resource.user_id = id
-    resource.schedule_code = 0
 
     if resource.valid?
       DatabaseHelper.add_resource(resource)

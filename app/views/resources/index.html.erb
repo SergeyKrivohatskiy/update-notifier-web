@@ -31,8 +31,9 @@
   <thead>
   <tr>
     <th style="width: 2%">№</th>
-    <th style="width: 44%">Name</th>
-    <th style="width: 44%">Tags</th>
+    <th style="width: 36%">Name</th>
+    <th style="width: 36%">Tags</th>
+    <th style="width: 16%">Update</th>
     <th style="width: 10%">&nbsp</th>
   </tr>
   </thead>
@@ -45,6 +46,9 @@
         <% resource[:tags].each do |tag_id| %>
           <div class="label"><%= link_to @tags[tag_id], {action: :filtered_by, id: tag_id} %></div>
         <% end %>
+      </td>
+      <td>
+        <%= schedule_code_to_s(resource[:schedule_code]) %>
       </td>
       <td style="text-align: center">
         <%= link_to 'Edit', edit_resource_path(resource[:id]), {class: 'btn', id: "edit-#{count}"} %>
