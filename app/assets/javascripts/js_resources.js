@@ -6,9 +6,9 @@
  * To change this template use File | Settings | File Templates.
  */
 
-$(function() {
-    $('#new-res-submit').click(function(){
-        if ($('#title').val()==="") {
+$(function () {
+    $('#new-res-submit').click(function () {
+        if ($('#title').val() === "") {
             // invalid
             $('#title').next('.help-inline').show();
             return false;
@@ -21,9 +21,9 @@ $(function() {
     });
 });
 
-$(function() {
-    $('#new-tag-submit').click(function(){
-        if ($('#tag_name').val()==="") {
+$(function () {
+    $('#new-tag-submit').click(function () {
+        if ($('#tag_name').val() === "") {
             // invalid
             $('#tag_name').next('.help-inline').show();
             return false;
@@ -36,7 +36,13 @@ $(function() {
     });
 });
 
-$(function() {
+//$(function () {
+//    $('#edit-res-submit').click(function () {
+//        $('#edit-res-form').submit();
+//    });
+//});
+
+$(function () {
     var search_string = $('#tag_string').first();
     search_string.attr('title', 'Type here to find tag and press Enter');
     search_string.tooltip({ placement: 'right', trigger: 'manual' });
@@ -45,3 +51,13 @@ $(function() {
         $(this).tooltip('hide');
     });
 });
+
+//$(function () {
+//    $('[id^="edit-res-"]').each(function (i) {
+//        $(this).click(function () {
+//            var str = '' + i;
+//            console.log(str);
+//
+//        })
+//    })
+//});

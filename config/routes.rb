@@ -8,7 +8,7 @@ UpdateNotifierFrontend::Application.routes.draw do
   get '/signin', to: 'static_pages#signin', as: 'signin'
   get '/error', to: 'static_pages#signin_error'
 
-  get '/help', to: "static_pages#help"
+  get '/about', to: "static_pages#about"
 
   get '/contact', to: "static_pages#contact"
 

@@ -36,6 +36,8 @@ class ResourcesController < ApplicationController
     end
     tag_str = tags_to_url(@selected_tags.dup)
     @resources = DatabaseHelper.resources(@id, (tag_str.blank? ? nil : {tags: tag_str}))
+    #@resource = flash[:resource]
+    #render 'resources/_edition' if @resource
   end
 
   def show
@@ -49,7 +51,7 @@ class ResourcesController < ApplicationController
     resource_id = params[:id]
     id = session[:user_id]
     @resource = DatabaseHelper.get_resource(id, resource_id)
-    @tag_string = get_tags_string(@resource, DatabaseHelper.tags(id))
+    @resource.tags = get_tags_string(@resource, DatabaseHelper.tags(id))
     @schedule_codes = ResourcesHelper.schedule_codes
     @schedule_code = schedule_code_to_s(@resource.schedule_code)
   end

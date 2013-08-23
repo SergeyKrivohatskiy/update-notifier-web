@@ -12,10 +12,16 @@
 
 <%= render 'resources/addition' %>
 
+<div id="for-edit">
+  <%= render partial: 'resources/edition' %>
+</div>
+
 <%= render 'tags/addition' %>
 
 <%= link_to 'Add resource', '#new-res-btn',
             {role: 'button', class: 'btn', 'data-toggle' => 'modal'} %>
+<%= link_to 'Edit resource', '#edit-res-form',
+            {role: 'button', class: 'btn', 'data-toggle' => 'modal', style: 'display: none', id: 'edit-res-btn'} %>
 <%= link_to 'Add tag', '#new-tag-btn',
             {role: 'button', class: 'btn', 'data-toggle' => 'modal'} %>
 
@@ -28,7 +34,7 @@
       }&nbsp<i class='icon-remove icon-white' ></i>".html_safe,
                                                 {action: :filtered_by, id: tag_id} %></div>
   <% end %>
-  <%= form_for :tag_search, url: {action: :filtered_by}, html: { method: :get, class: 'form-search' } do %>
+  <%= form_for :tag_search, url: {action: :filtered_by}, html: {method: :get, class: 'form-search'} do %>
       <%= text_field_tag :tag_string, nil, class: 'search-query input-small',
                          'data-provide' => 'typeahead', 'data-source' => "#{@tags.values}", rel: 'tooltip' %>
   <% end %>
@@ -49,24 +55,25 @@
   </thead>
   <tbody>
   <% @resources.each_with_index do |resource, count| %>
-    <tr>
-      <td><%= count+1 %></td>
-      <td><%= link_to resource[:name], resource[:url] %></td>
-      <td>
-        <% resource[:tags].each do |tag_id| %>
-          <div class="label"><%= link_to @tags[tag_id], {action: :filtered_by, id: tag_id} %></div>
-        <% end %>
-      </td>
-      <td>
-        <%= schedule_code_to_s(resource[:schedule_code]) %>
-      </td>
-      <td style="text-align: center">
-        <%= link_to 'Edit', edit_resource_path(resource[:id]), {class: 'btn', id: "edit-#{count}"} %>
-      </td>
-      <td style="text-align: center">
-        <%= link_to 'Delete', resource_path(resource[:id]), :method => :delete, :confirm => "Are you sure?", :class => 'btn' %>
-      </td>
-    </tr>
+      <tr>
+        <td><%= count+1 %></td>
+        <td><%= link_to resource[:name], resource[:url] %></td>
+        <td>
+          <% resource[:tags].each do |tag_id| %>
+              <div class="label"><%= link_to @tags[tag_id], {action: :filtered_by, id: tag_id} %></div>
+          <% end %>
+        </td>
+        <td>
+          <%= schedule_code_to_s(resource[:schedule_code]) %>
+        </td>
+        <td style="text-align: center">
+          <%= link_to 'Edit', edit_resource_path(resource[:id]),
+                      role: 'button', id: "edit-res-#{count}", class: 'btn', 'data-toggle' => 'modal', remote: true %>
+        </td>
+        <td style="text-align: center">
+          <%= link_to 'Delete', resource_path(resource[:id]), :method => :delete, :confirm => "Are you sure?", :class => 'btn' %>
+        </td>
+      </tr>
   <% end %>
   </tbody>
 </table>
