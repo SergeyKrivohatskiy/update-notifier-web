@@ -2,21 +2,37 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
-#$( =>
-#  $('#dialog-form').dialog
-#    autoOpen: false,
-#    height: 300,
-#    width: 350,
-#    modal: true,
-#    buttons:
-#      "Create an account": =>
-#        bValid = true
-#        allFields.removeClass 'ui-state-error'
-#
-#        if  bValid
-#          $( this ).dialog "close"
-#      Cancel: ->
-#        $( this ).dialog( "close" )
-#    close: ->
-#      allFields.val( "" ).removeClass "ui-state-error"
-#)
+$ ->
+  $('#new-res-submit').click ->
+    if $('#title').val() == ""
+      return false
+    else
+      $('#new-resource-form').submit()
+      return true
+
+$ ->
+  $('#new-tag-submit').click ->
+    if $('#tag_name').val() == ""
+      return false
+    else
+      $('#new-tag-form').submit()
+      return true
+
+$ ->
+  $('#form-search').submit ->
+    input = $(this).find('input#tag_string')
+    $('<input />').attr('type', 'hidden')
+      .attr('name', 'tag_id')
+      .attr('value', window.invert_tags[input.val()])
+      .appendTo('#form-search')
+
+
+#//$(function () {
+#//    var search_string = $('#search_btn').first();
+#//    search_string.attr('title', 'Type here to find tag');
+#//    search_string.tooltip({ placement: 'right', trigger: 'manual' });
+#//    search_string.tooltip('show');
+#//    search_string.click(function () {
+#//        $(this).tooltip('hide');
+#//    });
+#//});
