@@ -1,3 +1,15 @@
 // Place all the styles related to the Resources controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#tag_string {
+  height: 16px;
+  width: 95px;
+}
+
+.selected-tags {
+  margin: 20px;
+  h4, label, form {
+    margin: 5px 0;
+  }
+}

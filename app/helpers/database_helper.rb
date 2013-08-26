@@ -5,9 +5,9 @@ require 'webrick/httpstatus'
 
 module DatabaseHelper
 
-  def self.sign_in(email,name,surname)
-    response = HTTPartyWrapper::get('signin', { email: email,
-                                                name: name, surname: surname })
+  def self.sign_in(email, name, surname)
+    response = HTTPartyWrapper::get('signin', {email: email,
+                                               name: name, surname: surname})
     if WEBrick::HTTPStatus[response.code].new.
         kind_of? WEBrick::HTTPStatus::Success
       symbolize([response.parsed_response]).first
@@ -32,14 +32,12 @@ module DatabaseHelper
   end
 
   def self.edit_resource(resource)
-    if resource.valid?
-      response = HTTPartyWrapper::put("#{resource.user_id}/resources/#{resource.id}", nil, resource)
-      if WEBrick::HTTPStatus[response.code].new.
+    response = HTTPartyWrapper::put("#{resource.user_id}/resources/#{resource.id}", nil, resource)
+    if WEBrick::HTTPStatus[response.code].new.
         kind_of? WEBrick::HTTPStatus::Success
-        true
-      else
-        false
-      end
+      true
+    else
+      false
     end
   end
 
@@ -68,7 +66,7 @@ module DatabaseHelper
     end
   end
 
-  def self.get_tag(user_id,tag_id)
+  def self.get_tag(user_id, tag_id)
     response = HTTPartyWrapper::get("#{user_id}/tags/#{tag_id}")
     if WEBrick::HTTPStatus[response.code].new.
         kind_of? WEBrick::HTTPStatus::Success
@@ -97,7 +95,7 @@ module DatabaseHelper
   def self.symbolize(array_of_hash)
     return [] if array_of_hash.nil?
     array_of_hash.map do |hash|
-      hash.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
+      hash.inject({}) { |memo, (k, v)| memo[k.to_sym] = v; memo }
     end
   end
 

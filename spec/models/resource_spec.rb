@@ -4,7 +4,7 @@ require 'spec_helper'
 describe Resource do
 
   before do
-    @resource = Resource.new(name: 'Some name', url: 'http://google.ru')
+    @resource = Resource.new(name: 'Some name', url: 'http://google.ru', schedule_code: 0)
   end
 
   subject { @resource }
@@ -22,8 +22,9 @@ describe Resource do
   end
 
   describe 'when url should be valid: ' do
-    %w[google.ru http://google.ru http://www.google.ru тамтэк.рф
-        http://тамтэк.рф ].each() do |url|
+    %w[google.ru http://google.ru http://www.google.ru
+        https://google.ru http://www.google.ru тамтэк.рф
+        http://тамтэк.рф http://habrahabr.ru/post/82841].each() do |url|
       it "#{url}" do
         @resource.url = url
         should be_valid
@@ -40,8 +41,24 @@ describe Resource do
     end
   end
 
+
   describe 'when url is soooo looong' do
-    before { @resource.url = "http://#{'a'*253}.com" }
+    before { @resource.url = "http://#{'a'*3}.com" }
+    it { should_not be_valid }
+  end
+
+  describe 'when url is soooo looong' do
+    before { @resource.url = "http://#{'a'*243}.com" }
+    it { should_not be_valid }
+  end
+
+  describe 'when url is soooo looong' do
+    before { @resource.url = "http://#{'a'*250}.com" }
+    it { should_not be_valid }
+  end
+
+  describe 'when url is soooo looong' do
+    before { @resource.url = "http://#{'a'*252}.com" }
     it { should_not be_valid }
   end
 

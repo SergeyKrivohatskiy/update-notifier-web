@@ -5,6 +5,7 @@ class StaticPagesController < ApplicationController
   skip_before_filter :require_login, only: [:home, :signin, :signin_error]
 
   def home
+    session[:redirect_url] = flash[:redirect_url]
   end
 
   def signin
@@ -12,7 +13,7 @@ class StaticPagesController < ApplicationController
     client = Google::APIClient.new
     plus = client.discovered_api('plus')
     client.authorization.client_id = ENV['CLIENT_ID']
-    client.authorization.client_secret = 'oGTOac49uHQprrlcJrasB1v1'
+    client.authorization.client_secret = ENV['CLIENT_SECRET']
     client.authorization.scope = 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email'
     client.authorization.redirect_uri = signin_url;
 
@@ -31,7 +32,8 @@ class StaticPagesController < ApplicationController
     if user
       session[:user] = user
       session[:last_update] = 0
-      redirect_to resources_path
+      true_path, session[:redirect_url] = session[:redirect_url] || resources_path, nil
+      redirect_to true_path
     else
       redirect_to action: :signin_error
     end

@@ -29,12 +29,19 @@ class ResourcesController < ApplicationController
     session[:user_id] = @id = user[:id]
     @name = user[:name]
     @tags = DatabaseHelper.tags(@id)
+
+    @invert_tags = {}
+    @tags.each_pair do |key, value|
+      @invert_tags[value] = key
+    end
+
     @selected_tags = session[:selected_tags] || []
+    keys = @tags.keys
     @selected_tags.each do |item|
-      keys = @tags.keys
       @selected_tags.delete(item) if !(keys.include? item.to_i)
     end
-    tag_str = tags_to_url(@selected_tags.dup)
+
+    tag_str = tags_to_url_param(@selected_tags.dup)
     @resources = DatabaseHelper.resources(@id, (tag_str.blank? ? nil : {tags: tag_str}))
     #@resource = flash[:resource]
     #render 'resources/_edition' if @resource
@@ -79,16 +86,9 @@ class ResourcesController < ApplicationController
   end
 
   def filtered_by
-    # TODO make it normal
 
-    if params[:id].to_i > 0
-      selected_tag = params[:id].to_i
-    else
-      tags = DatabaseHelper.tags(session[:user_id])
-      key = tags.keys.select do |key|
-        tags[key] == params[:tag]
-      end
-      selected_tag = key.first
+    if params[:tag_id]
+      selected_tag = params[:tag_id].to_i
     end
 
     selected_tags = session[:selected_tags]
@@ -102,14 +102,6 @@ class ResourcesController < ApplicationController
     end
     session[:selected_tags] = selected_tags
     redirect_to :back, flash: {new_tag: selected_tag}
-  end
-
-  def tags_to_url(tags_id_array)
-    return '' if tags_id_array.blank?
-    ft = tags_id_array.shift
-    tags_id_array.inject("#{ft}") do |str, tag|
-      "#{str},#{tag}"
-    end
   end
 
 end

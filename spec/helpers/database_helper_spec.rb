@@ -99,7 +99,8 @@ describe DatabaseHelper do
       before do
         @resource = Resource.new(name: 'test',
                                 url: 'http://google.com',
-                                user_id: @user_id)
+                                user_id: @user_id,
+                                schedule_code: 0)
         @resource.id = DatabaseHelper.add_resource(@resource)
       end
       it 'will be success if resource will be edited' do

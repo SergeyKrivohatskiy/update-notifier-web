@@ -1,5 +1,9 @@
 <% provide(:title, 'Resources') %>
 
+<%= javascript_tag do %>
+    window.invert_tags = <%= raw @invert_tags.to_json %>
+<% end %>
+
 <% content_for :inner_header do %>
     <h1>Hello, <%= @name %>!</h1>
 <% end %>
@@ -32,11 +36,14 @@
   <% @selected_tags.each do |tag_id| %>
       <div class="label label-info"><%= link_to "#{@tags[tag_id.to_i]
       }&nbsp<i class='icon-remove icon-white' ></i>".html_safe,
-                                                {action: :filtered_by, id: tag_id} %></div>
+                                                {action: :filtered_by, tag_id: tag_id} %></div>
   <% end %>
-  <%= form_for :tag_search, url: {action: :filtered_by}, html: {method: :get, class: 'form-search'} do %>
-      <%= text_field_tag :tag_string, nil, class: 'search-query input-small',
-                         'data-provide' => 'typeahead', 'data-source' => "#{@tags.values}", rel: 'tooltip' %>
+  <%= form_for :tag_search, url: {action: :filtered_by}, html: {method: :get, class: 'form-search', id: 'form-search'} do |f| %>
+      <div class="input-append">
+        <%= text_field_tag :tag_string, nil, class: 'search-query input-small', placeholder: 'Type tag name',
+                           'data-provide' => 'typeahead', 'data-source' => "#{@tags.values}", rel: 'tooltip' %>
+        <%= f.submit 'Filter', id: 'search_btn', class: 'btn ' %>
+      </div>
   <% end %>
 </div>
 
@@ -60,7 +67,7 @@
         <td><%= link_to resource[:name], resource[:url] %></td>
         <td>
           <% resource[:tags].each do |tag_id| %>
-              <div class="label"><%= link_to @tags[tag_id], {action: :filtered_by, id: tag_id} %></div>
+              <div class="label"><%= link_to @tags[tag_id], {action: :filtered_by, tag_id: tag_id} %></div>
           <% end %>
         </td>
         <td>

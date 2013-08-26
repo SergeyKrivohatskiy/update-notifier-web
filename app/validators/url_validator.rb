@@ -8,6 +8,7 @@ class UrlValidator < ActiveModel::EachValidator
   # Doesn't work with IP-adresses
   def url_valid?(url)
     url_parts = url.partition('//')
-    PublicSuffix.valid?(url_parts[2])
+    url_parts = url_parts[2].partition('/')
+    PublicSuffix.valid?(url_parts[0])
   end
 end

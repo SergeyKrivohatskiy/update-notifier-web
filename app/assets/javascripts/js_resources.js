@@ -42,14 +42,26 @@ $(function () {
 //    });
 //});
 
-$(function () {
-    var search_string = $('#tag_string').first();
-    search_string.attr('title', 'Type here to find tag and press Enter');
-    search_string.tooltip({ placement: 'right', trigger: 'manual' });
-    search_string.tooltip('show');
-    search_string.click(function () {
-        $(this).tooltip('hide');
+//$(function () {
+//    var search_string = $('#search_btn').first();
+//    search_string.attr('title', 'Type here to find tag');
+//    search_string.tooltip({ placement: 'right', trigger: 'manual' });
+//    search_string.tooltip('show');
+//    search_string.click(function () {
+//        $(this).tooltip('hide');
+//    });
+//});
+
+$(document).ready(function() {
+    $('#form-search').submit(function() {
+        var input = $(this).children('input');
+        $('<input />').attr('type', 'hidden')
+            .attr('name', 'tag_id')
+            .attr('value', window.invert_tags[input.val()])
+            .appendTo('#form-search');
+        console.log('Hmm?')
     });
+    console.log(window.invert_tags);
 });
 
 //$(function () {

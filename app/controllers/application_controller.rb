@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   def require_login
     unless session[:user]
-      redirect_to(root_path, status: :see_other)
+      redirect_to(root_path, status: :see_other, flash: { redirect_url: request.original_url })
     #else
       #unless session[:user] == DatabaseHelper.
     end

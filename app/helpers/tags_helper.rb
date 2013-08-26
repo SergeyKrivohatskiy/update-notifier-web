@@ -19,13 +19,8 @@ module TagsHelper
   def add_new_tags(tag_string, user_id)
     tags = DatabaseHelper.tags(user_id)
     res_tags = clean_tags(tag_string)
-    # tags - all user tags ({ id: name })
-    # new_tags - resource tags, which no exist in db (only names)
     new_tags = res_tags - tags.values
-    # old_tags - resource tags, which already exist in db (only names)
     old_tags = res_tags - new_tags
-    # another way with the same result:
-    # old_tags = resource_info[:tags] & tags.values
 
     tag_ids = tags.map do |key, value|
       key if old_tags.include? value
@@ -45,4 +40,13 @@ module TagsHelper
     end
     tag_ids
   end
+
+  def tags_to_url_param(tags_id_array)
+    return '' if tags_id_array.blank?
+    ft = tags_id_array.shift
+    tags_id_array.inject("#{ft}") do |str, tag|
+      "#{str},#{tag}"
+    end
+  end
+
 end
