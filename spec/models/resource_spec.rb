@@ -42,15 +42,15 @@ describe Resource do
   end
 
 
-  describe 'when url is soooo looong' do
-    before { @resource.url = "http://#{'a'*3}.com" }
-    it { should_not be_valid }
-  end
-
-  describe 'when url is soooo looong' do
-    before { @resource.url = "http://#{'a'*243}.com" }
-    it { should_not be_valid }
-  end
+  #describe 'when url is soooo looong' do
+  #  before { @resource.url = "http://#{'a'*48}.com" }
+  #  it { should_not be_valid }
+  #end
+  #
+  #describe 'when url is soooo looong' do
+  #  before { @resource.url = "http://#{'a'*243}.com" }
+  #  it { should_not be_valid }
+  #end
 
   describe 'when url is soooo looong' do
     before { @resource.url = "http://#{'a'*250}.com" }

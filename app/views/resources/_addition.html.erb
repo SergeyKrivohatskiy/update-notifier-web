@@ -10,7 +10,7 @@
       </div>
       <div class="modal-body">
         Add new resource:
-        <% %w[name url tags].each do |item| %>
+        <% %w[name url tags filter].each do |item| %>
             <div class="control-group">
               <%= f.text_field item.to_sym, placeholder: item.titleize %>
             </div>
