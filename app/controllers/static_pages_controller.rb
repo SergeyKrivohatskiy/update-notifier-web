@@ -10,7 +10,7 @@ class StaticPagesController < ApplicationController
 
   def signin
 
-    client = Google::APIClient.new
+    client = Google::APIClient.new({ application_name: 'update notifier', application_version: '0.9 beta' })
     plus = client.discovered_api('plus')
     client.authorization.client_id = ENV['CLIENT_ID']
     client.authorization.client_secret = ENV['CLIENT_SECRET']
@@ -31,7 +31,6 @@ class StaticPagesController < ApplicationController
     user = DatabaseHelper.sign_in(user_info['email'],user_name['given_name'], user_name['family_name'])
     if user
       session[:user] = user
-      session[:last_update] = 0
       true_path, session[:redirect_url] = session[:redirect_url] || resources_path, nil
       redirect_to true_path
     else
