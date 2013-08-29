@@ -43,6 +43,7 @@ class ResourcesController < ApplicationController
 
     tag_str = tags_to_url_param(@selected_tags.dup)
     @resources = DatabaseHelper.resources(@id, (tag_str.blank? ? nil : {tags: tag_str}))
+
     #@resource = flash[:resource]
     #render 'resources/_edition' if @resource
   end
@@ -78,6 +79,13 @@ class ResourcesController < ApplicationController
       @errors_array = resource.errors.full_messages
     end
     redirect_to action: :index
+  end
+
+  def check_update
+    res_id = DatabaseHelper.get_updated(session[:user_id], { time: Time.new.to_s })
+    if res_id
+      render text: res_id.to_s
+    end
   end
 
   def destroy

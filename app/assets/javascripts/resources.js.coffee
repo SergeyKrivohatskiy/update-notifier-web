@@ -8,7 +8,7 @@ $ ->
       return false
     else
       $('#new-resource-form').submit()
-      return true
+    return true
 
 $ ->
   $('#new-tag-submit').click ->
@@ -16,7 +16,7 @@ $ ->
       return false
     else
       $('#new-tag-form').submit()
-      return true
+    return true
 
 $ ->
   $('#form-search').submit ->
@@ -25,6 +25,17 @@ $ ->
       .attr('name', 'tag_id')
       .attr('value', window.invert_tags[input.val()])
       .appendTo('#form-search')
+
+#$ ->
+#  id = setInterval(( ->
+#    $.ajax('/update').done (data) ->
+#      console.log(data)
+#  ), 3000)
+
+$ ->
+  $('#unique').click ->
+    $.ajax('/update').done (data) ->
+      console.log(data)
 
 
 #//$(function () {

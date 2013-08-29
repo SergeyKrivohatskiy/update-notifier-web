@@ -2,6 +2,7 @@ UpdateNotifierFrontend::Application.routes.draw do
 
   resources :resources
   get '/filter', to: 'resources#filtered_by'
+  get '/update', to: 'resources#check_update'
 
   root to: 'static_pages#home'
 

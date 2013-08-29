@@ -1,3 +1,5 @@
+require 'cgi'
+
 module HTTPartyWrapper
 
   #@address = '172.16.9.215'
@@ -10,7 +12,7 @@ module HTTPartyWrapper
       full_args=''
     elsif args.is_a? Hash
       full_args = args.inject('?') do |addr, pair|
-        addr+"&#{pair.first}=#{pair.last}"
+        addr+"&#{pair.first}=#{CGI::escape pair.last}"
       end
       full_args[1]=''
     else

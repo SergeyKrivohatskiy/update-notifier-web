@@ -21,12 +21,13 @@
 </div>
 
 <%= render 'tags/addition' %>
+<button id="unique" class="btn">text</button>
 
-<%= link_to 'Add resource', '#new-res-btn',
+<%= link_to 'Add resource', '#new-res-form',
             {role: 'button', class: 'btn', 'data-toggle' => 'modal'} %>
 <%= link_to 'Edit resource', '#edit-res-form',
             {role: 'button', class: 'btn', 'data-toggle' => 'modal', style: 'display: none', id: 'edit-res-btn'} %>
-<%= link_to 'Add tag', '#new-tag-btn',
+<%= link_to 'Add tag', '#new-tag-form',
             {role: 'button', class: 'btn', 'data-toggle' => 'modal'} %>
 
 <br/>

@@ -51,6 +51,17 @@ module DatabaseHelper
     WEBrick::HTTPStatus[response.code].new.kind_of? WEBrick::HTTPStatus::Success
   end
 
+  def self.get_updated(user_id, time)
+    response = HTTPartyWrapper::get("#{user_id}/updated", time)
+    if WEBrick::HTTPStatus[response.code].new.
+        kind_of? WEBrick::HTTPStatus::Success
+      ['12','14']
+      #response.parsed_response
+    else
+      nil
+    end
+  end
+
   def self.tags(user_id)
     response = HTTPartyWrapper::get("#{user_id}/tags")
     hashize(response.parsed_response)

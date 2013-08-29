@@ -1,4 +1,4 @@
-<div id="new-res-btn" class="modal hide fade modal-thin" tabindex="-1" role="dialog"
+<div id="new-res-form" class="modal hide fade modal-thin" tabindex="-1" role="dialog"
      aria-labelledby="NewResModalLabel" aria-hidden="true">
   <%= form_for :resource, url: resources_path, html: {
           class: 'form-horizontal', id: 'new-resource-form'} do |f| %>
@@ -23,8 +23,7 @@
 
       </div>
       <div class="modal-footer">
-        <!--<%= f.submit 'Add', class: 'btn' %>-->
-        <button class="btn btn-primary" data-dismiss="modal" id="new-res-submit">Add</button>
+        <%= f.submit 'Add', class: 'btn btn-primary' %>
         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
       </div>
   <% end %>

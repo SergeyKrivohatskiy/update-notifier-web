@@ -3,7 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 #tag_string {
-  height: 16px;
+  //height: 16px;
   width: 95px;
 }
 
@@ -12,4 +12,12 @@
   h4, label, form {
     margin: 5px 0;
   }
+}
+
+form {
+  margin: 0px;
+}
+
+input {
+  height: 30px;
 }
