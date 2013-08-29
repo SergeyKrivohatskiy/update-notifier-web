@@ -51,7 +51,7 @@
 
 <%= render 'shared/errors' %>
 
-<table class="table table-bordered table-striped table-condensed">
+<table class="table table-bordered table-condensed">
   <thead>
   <tr>
     <th style="width: 2%">№</th>
@@ -63,9 +63,9 @@
   </thead>
   <tbody>
   <% @resources.each_with_index do |resource, count| %>
-      <tr>
+      <tr id="row-<%= resource[:id] %>">
         <td><%= count+1 %></td>
-        <td><%= link_to resource[:name], resource[:url] %></td>
+        <td><%= link_to resource[:name], resource[:url], target: '_blank' %></td>
         <td>
           <% resource[:tags].each do |tag_id| %>
               <div class="label"><%= link_to @tags[tag_id], {action: :filtered_by, tag_id: tag_id} %></div>

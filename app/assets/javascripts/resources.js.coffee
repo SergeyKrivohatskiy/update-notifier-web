@@ -26,16 +26,25 @@ $ ->
       .attr('value', window.invert_tags[input.val()])
       .appendTo('#form-search')
 
-#$ ->
-#  id = setInterval(( ->
-#    $.ajax('/update').done (data) ->
-#      console.log(data)
-#  ), 3000)
-
 $ ->
-  $('#unique').click ->
+  id = setInterval(( ->
     $.ajax('/update').done (data) ->
-      console.log(data)
+      $.each(data, (index, value) ->
+        elem = $('#row-'+value).first()
+        elem.tooltip({ placement: 'left', trigger: 'manual', title: 'This resource has been updated' })
+        elem.tooltip('show')
+        #        elem.addClass('update-exists')
+        elem.click ->
+          $(this).tooltip('hide')
+#          $(this).removeClass('update-exists')
+      )
+  ), 10000)
+
+#$ ->
+#  $('#unique').click ->
+#    $.ajax('/update').done (data) ->
+#      blabla
+
 
 
 #//$(function () {

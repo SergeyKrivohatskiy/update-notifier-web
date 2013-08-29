@@ -55,8 +55,7 @@ module DatabaseHelper
     response = HTTPartyWrapper::get("#{user_id}/updated", time)
     if WEBrick::HTTPStatus[response.code].new.
         kind_of? WEBrick::HTTPStatus::Success
-      ['12','14']
-      #response.parsed_response
+      response.parsed_response
     else
       nil
     end

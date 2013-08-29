@@ -43,6 +43,7 @@ class ResourcesController < ApplicationController
 
     tag_str = tags_to_url_param(@selected_tags.dup)
     @resources = DatabaseHelper.resources(@id, (tag_str.blank? ? nil : {tags: tag_str}))
+    session[:last_update] = Time.new.to_s
 
     #@resource = flash[:resource]
     #render 'resources/_edition' if @resource
@@ -82,9 +83,10 @@ class ResourcesController < ApplicationController
   end
 
   def check_update
-    res_id = DatabaseHelper.get_updated(session[:user_id], { time: Time.new.to_s })
+    res_id = DatabaseHelper.get_updated(session[:user_id], { time: session[:last_update] })
+    session[:last_update] = Time.new.to_s
     if res_id
-      render text: res_id.to_s
+      render json: res_id
     end
   end
 
