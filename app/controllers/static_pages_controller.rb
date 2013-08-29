@@ -25,8 +25,8 @@ class StaticPagesController < ApplicationController
         :parameters => {'userId' => 'me'},
         :authenticated => true
     ).data['name']
-    user_name['given_name'] = CGI::escape(user_name['given_name'])
-    user_name['family_name'] = CGI::escape(user_name['family_name'])
+    user_name['given_name'] = user_name['given_name']
+    user_name['family_name'] = user_name['family_name']
     user_info = HTTParty.get('https://www.googleapis.com/oauth2/v2/userinfo?access_token=' + client.authorization.access_token)
     user = DatabaseHelper.sign_in(user_info['email'],user_name['given_name'], user_name['family_name'])
     if user
