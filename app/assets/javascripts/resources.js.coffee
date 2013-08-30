@@ -40,6 +40,19 @@ $ ->
       )
   ), 13000)
 
+#$ ->
+#  $('#unique').click ->
+#    $.ajax('/update').done (data) ->
+#      $.each(data, (index, value) ->
+#        elem = $('#row-'+value).first()
+#        elem.tooltip({ placement: 'left', trigger: 'manual', title: 'This resource has been updated' })
+#        elem.tooltip('show')
+#        #        elem.addClass('update-exists')
+#        elem.click ->
+#          $(this).tooltip('hide')
+##          $(this).removeClass('update-exists')
+#      )
+
 #//$(function () {
 #//    var search_string = $('#search_btn').first();
 #//    search_string.attr('title', 'Type here to find tag');

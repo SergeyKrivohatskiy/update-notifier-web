@@ -43,7 +43,7 @@ class ResourcesController < ApplicationController
 
     tag_str = tags_to_url_param(@selected_tags.dup)
     @resources = DatabaseHelper.resources(@id, (tag_str.blank? ? nil : {tags: tag_str}))
-    session[:last_update] = Time.new.to_s
+    session[:last_update] =  session[:last_update] || Time.new.to_s
 
     #@resource = flash[:resource]
     #render 'resources/_edition' if @resource
