@@ -62,5 +62,9 @@ module UpdateNotifierFrontend
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # For precompiling specific controller assets you should remove require_tree . from application.js
+    # and add names here
+    config.assets.precompile += ['resources.js', 'static_pages.js']
   end
 end

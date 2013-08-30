@@ -38,14 +38,7 @@ $ ->
           $(this).tooltip('hide')
 #          $(this).removeClass('update-exists')
       )
-  ), 10000)
-
-#$ ->
-#  $('#unique').click ->
-#    $.ajax('/update').done (data) ->
-#      blabla
-
-
+  ), 13000)
 
 #//$(function () {
 #//    var search_string = $('#search_btn').first();
