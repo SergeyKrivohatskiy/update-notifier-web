@@ -1,1 +1,6 @@
-<h1>Find me bla-bla-bla</h1>
+<% if @message %>
+  <div class="alert-error">
+    <%= @message %>
+  </div>
+<% end %>
+<%= link_to 'Sign out', {controller: :static_pages, action: :sign_out}, class: 'btn' %>

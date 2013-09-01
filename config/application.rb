@@ -65,6 +65,6 @@ module UpdateNotifierFrontend
 
     # For precompiling specific controller assets you should remove require_tree . from application.js
     # and add names here
-    config.assets.precompile += ['resources.js', 'static_pages.js']
+    config.assets.precompile += ['resources.js', 'static_pages.js', 'user.js']
   end
 end

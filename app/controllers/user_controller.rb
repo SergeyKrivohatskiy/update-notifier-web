@@ -1,18 +1,7 @@
 class UserController < ApplicationController
 
   def index
-
+    @message = flash[:message]
   end
 
-  def edit
-
-  end
-
-  def destroy
-
-  end
-
-  def sign_out
-
-  end
 end
