@@ -4,6 +4,7 @@
 
 $ ->
   $('#new-res-submit').click ->
+    fadeIn()
     $.post(
       window.location.href,
       {
@@ -16,10 +17,12 @@ $ ->
         }
       }
     ).done( ->
+      fadeOut()
       $('#new-res-form').modal('hide')
       $('#new-res-form').find('form')[0].reset()
       $('#new-res-form').find('.errors').html('')
     ).fail((response) ->
+      fadeOut()
       html_errors = '<div class="alert alert-error"><ul>'
       $.each(response.responseJSON, (index, value) ->
         html_errors+='<li>'
@@ -34,6 +37,7 @@ window.submitEdition = ->
   $('#edit-res-submit').click ->
     my_modal = $('#edit-res-form')
     link = my_modal.find('form').attr('action')
+    fadeIn()
     $.ajax(
       link,
       {
@@ -49,9 +53,11 @@ window.submitEdition = ->
         }
       }
     ).done( ->
+      fadeOut()
       my_modal.modal('hide')
       my_modal.find('.errors').html('')
     ).fail((response) ->
+      fadeOut()
       html_errors = '<div class="alert alert-error"><ul>'
       $.each(response.responseJSON, (index, value) ->
         html_errors+='<li>'

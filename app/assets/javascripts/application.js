@@ -17,3 +17,4 @@
 //= require bootstrap-typeahead
 //= require bootstrap-tooltip
 //= require bootstrap-dropdown
+//= require app
