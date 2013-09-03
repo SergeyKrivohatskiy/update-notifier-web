@@ -1,15 +1,18 @@
 <% if @resource %>
     <div id="edit-res-form" class="modal hide fade modal-thin" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel" aria-hidden="true">
-      <%= form_for @resource, :as => :resource, :url => resource_url(@resource.id),
-                   :method => :put, :html => {:class => 'form-horizontal'} do |f| %>
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"
-                    aria-hidden="true">×
-            </button>
-            <h3 id="myModalLabel">Add new resource</h3>
-          </div>
-          <div class="modal-body">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"
+                aria-hidden="true">×
+        </button>
+        <h3 id="myModalLabel">Add new resource</h3>
+      </div>
+      <div class="modal-body">
+        <%= form_for @resource, :as => :resource2, :url => resource_path(@resource.id),
+                     :method => :put, :html => {:class => 'form-horizontal'} do |f| %>
+            <div class="errors">
+              <%= render partial: 'shared/errors' %>
+            </div>
             Edit resource "<%= @resource.url %>"
             <% %w[name url tags filter].each do |item| %>
                 <div class="control-group">
@@ -22,12 +25,11 @@
                                       @schedule_codes, :to_s, :to_s, {:selected => @schedule_code} %>
             </div>
 
-          </div>
-          <div class="modal-footer">
-            <%= f.submit 'Edit', class: 'btn btn-primary' %>
-            <!--<button class="btn btn-primary" data-dismiss="modal" id="edit-res-submit">Edit</button>-->
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-          </div>
-      <% end %>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button id="edit-res-submit" class="btn btn-primary" aria-hidden="true">Edit</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      </div>
     </div>
 <% end %>

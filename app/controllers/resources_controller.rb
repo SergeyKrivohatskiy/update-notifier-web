@@ -3,7 +3,6 @@ class ResourcesController < ApplicationController
   include TagsHelper
 
   def create
-    # Create resource
     id = session[:user_id]
     tags = DatabaseHelper.tags(id)
     resource_info = params[:resource]
@@ -14,16 +13,18 @@ class ResourcesController < ApplicationController
 
     if resource.valid?
       DatabaseHelper.add_resource(resource)
+      @tags = DatabaseHelper.tags(id)
+      selected_tags = session[:selected_tags] || []
+      tag_str = tags_to_url_param(selected_tags.dup)
+      @resources = DatabaseHelper.resources(id, (tag_str.blank? ? nil : {tags: tag_str}))
     else
       @errors_array = resource.errors.full_messages
+      render status: :bad_request, json: @errors_array
     end
-    redirect_to :back, flash: {errors: @errors_array}
-
   end
 
   def index
     @schedule_codes = ResourcesHelper.schedule_codes
-    # 'Index' page - list of all resources and options
     @errors_array = flash[:errors]
     user = session[:user]
     session[:user_id] = @id = user[:id]
@@ -36,17 +37,10 @@ class ResourcesController < ApplicationController
     end
 
     @selected_tags = session[:selected_tags] || []
-    keys = @tags.keys
-    @selected_tags.each do |item|
-      @selected_tags.delete(item) if !(keys.include? item.to_i)
-    end
 
     tag_str = tags_to_url_param(@selected_tags.dup)
     @resources = DatabaseHelper.resources(@id, (tag_str.blank? ? nil : {tags: tag_str}))
     session[:last_update] =  session[:last_update] || Time.new.to_s
-
-    #@resource = flash[:resource]
-    #render 'resources/_edition' if @resource
   end
 
   def show
@@ -69,17 +63,24 @@ class ResourcesController < ApplicationController
     id = session[:user_id]
     tags = DatabaseHelper.tags(id)
     resource_info = params[:resource]
-    resource_info[:tags] = add_new_tags(resource_info[:tags], id)
-    resource_info[:id] = params[:id]
-    resource_info[:user_id] = id
-    resource_info[:schedule_code] = ResourcesHelper.schedule_codes.index(resource_info[:schedule_code])
-    resource = Resource.new(resource_info)
-    if resource.valid?
-      DatabaseHelper.edit_resource(resource)
-    else
-      @errors_array = resource.errors.full_messages
+    if resource_info
+      resource_info[:tags] = add_new_tags(resource_info[:tags], id)
+      resource_info[:id] = params[:id]
+      resource_info[:user_id] = id
+      resource_info[:schedule_code] = ResourcesHelper.schedule_codes.index(resource_info[:schedule_code])
+      resource = Resource.new(resource_info)
+      if resource.valid?
+        DatabaseHelper.edit_resource(resource)
+        @tags = DatabaseHelper.tags(id)
+        selected_tags = session[:selected_tags] || []
+        tag_str = tags_to_url_param(selected_tags.dup)
+        @resources = DatabaseHelper.resources(id, (tag_str.blank? ? nil : {tags: tag_str}))
+      else
+        @errors_array = resource.errors.full_messages
+        render status: :bad_request, json: @errors_array
+      end
     end
-    redirect_to action: :index
+    #redirect_to action: :index
   end
 
   def check_update
@@ -91,8 +92,14 @@ class ResourcesController < ApplicationController
   end
 
   def destroy
-    result = DatabaseHelper.delete_resource(session[:user_id], params[:id])
-    redirect_to action: :index
+    id = session[:user_id]
+    result = DatabaseHelper.delete_resource(id, params[:id])
+    if result
+      @tags = DatabaseHelper.tags(id)
+      selected_tags = session[:selected_tags] || []
+      tag_str = tags_to_url_param(selected_tags.dup)
+      @resources = DatabaseHelper.resources(id, (tag_str.blank? ? nil : {tags: tag_str}))
+    end
   end
 
   def filtered_by

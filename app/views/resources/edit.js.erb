@@ -1,6 +1,5 @@
 $(function () {
     $('#for-edit').html("<%= escape_javascript(render partial: 'resources/edition').html_safe %>");
-//    window.open('http://localhost:3000/resources#edit-res-btn');
-//    document.location.href = 'http://localhost:3000/resources#edit-res-frm';
-    $('#edit-res-btn').click();
+    submitEdition();
+    $('#edit-res-form').modal('show');
 })

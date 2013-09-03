@@ -24,8 +24,6 @@
 
 <%= link_to 'Add resource', '#new-res-form',
             {role: 'button', class: 'btn', 'data-toggle' => 'modal'} %>
-<%= link_to 'Edit resource', '#edit-res-form',
-            {role: 'button', class: 'btn', 'data-toggle' => 'modal', style: 'display: none', id: 'edit-res-btn'} %>
 <%= link_to 'Add tag', '#new-tag-form',
             {role: 'button', class: 'btn', 'data-toggle' => 'modal'} %>
 
@@ -47,40 +45,8 @@
   <% end %>
 </div>
 
-
 <%= render 'shared/errors' %>
 
-<table class="table table-bordered table-condensed">
-  <thead>
-  <tr>
-    <th style="width: 2%">№</th>
-    <th style="width: 36%">Name</th>
-    <th style="width: 36%">Tags</th>
-    <th style="width: 16%">Update</th>
-    <th style="width: 10%">&nbsp</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @resources.each_with_index do |resource, count| %>
-      <tr id="row-<%= resource[:id] %>">
-        <td><%= count+1 %></td>
-        <td><%= link_to resource[:name], resource[:url], target: '_blank' %></td>
-        <td>
-          <% resource[:tags].each do |tag_id| %>
-              <div class="label"><%= link_to @tags[tag_id], {action: :filtered_by, tag_id: tag_id} %></div>
-          <% end %>
-        </td>
-        <td>
-          <%= schedule_code_to_s(resource[:schedule_code]) %>
-        </td>
-        <td style="text-align: center">
-          <%= link_to 'Edit', edit_resource_path(resource[:id]),
-                      role: 'button', id: "edit-res-#{count}", class: 'btn', 'data-toggle' => 'modal', remote: true %>
-        </td>
-        <td style="text-align: center">
-          <%= link_to 'Delete', resource_path(resource[:id]), :method => :delete, :confirm => "Are you sure?", :class => 'btn' %>
-        </td>
-      </tr>
-  <% end %>
-  </tbody>
-</table>
+<%= render partial: 'resources_list' %>
+
+<div id="empty"></div>
