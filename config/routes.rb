@@ -1,15 +1,16 @@
 UpdateNotifierFrontend::Application.routes.draw do
 
+  get 'sign_in', to: 'sessions#sign_in'
+  get 'sign_out', to: 'sessions#sign_out'
+  get 'error', to: 'sessions#signin_error'
+
   resources :resources
   get '/filter', to: 'resources#filtered_by'
   get '/update', to: 'resources#check_update'
 
   root to: 'static_pages#home'
 
-  get '/signin', to: 'static_pages#signin', as: 'signin'
-  get '/error', to: 'static_pages#signin_error'
   get '/settings', to: 'user#index'
-  get '/signout', to: 'static_pages#sign_out'
   get '/about', to: "static_pages#about"
   get '/contact', to: "static_pages#contact"
 

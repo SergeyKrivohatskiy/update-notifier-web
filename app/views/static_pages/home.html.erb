@@ -5,7 +5,7 @@
     <%= link_to 'Sign in', 'https://accounts.google.com/o/oauth2/auth?' +
             'scope=https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email&' +
             'state=%2Fprofile&' +
-            'redirect_uri=' + signin_url + '&' +
+            'redirect_uri=' + sign_in_url + '&' +
             'response_type=code&' +
             'client_id=' + ENV['CLIENT_ID'], :class => 'btn' %>
 

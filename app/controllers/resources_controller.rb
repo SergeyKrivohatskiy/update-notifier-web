@@ -104,7 +104,7 @@ class ResourcesController < ApplicationController
 
   def filtered_by
 
-    if params[:tag_id]
+    unless params[:tag_id].blank?
       selected_tag = params[:tag_id].to_i
     end
 
@@ -118,7 +118,7 @@ class ResourcesController < ApplicationController
       selected_tags.unshift selected_tag
     end
     session[:selected_tags] = selected_tags
-    redirect_to :back, flash: {new_tag: selected_tag}
+    redirect_to :back
   end
 
 end
