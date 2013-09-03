@@ -35,7 +35,7 @@ class ResourcesController < ApplicationController
     @tags.each_pair do |key, value|
       @invert_tags[value] = key
     end
-
+    session[:selected_tags] ||= []
     @selected_tags = session[:selected_tags] || []
 
     tag_str = tags_to_url_param(@selected_tags.dup)
@@ -103,21 +103,18 @@ class ResourcesController < ApplicationController
   end
 
   def filtered_by
-
     unless params[:tag_id].blank?
       selected_tag = params[:tag_id].to_i
+      if selected_tag > 0
+        selected_tags = session[:selected_tags]
+        selected_tags = [] unless selected_tags
+        if selected_tags.include? selected_tag
+          selected_tags.delete selected_tag
+        else
+          selected_tags.unshift selected_tag
+        end
+      end
     end
-
-    selected_tags = session[:selected_tags]
-    if selected_tags.nil?
-      selected_tags = []
-    end
-    if selected_tags.include?(selected_tag)
-      selected_tags.delete selected_tag
-    else
-      selected_tags.unshift selected_tag
-    end
-    session[:selected_tags] = selected_tags
     redirect_to :back
   end
 

@@ -70,9 +70,12 @@ $ ->
 $ ->
   $('#form-search').submit ->
     input = $(this).find('input#tag_string')
+    value = window.invert_tags[input.val()]
+    if typeof value == 'undefined'
+      return false
     $('<input />').attr('type', 'hidden')
       .attr('name', 'tag_id')
-      .attr('value', window.invert_tags[input.val()])
+      .attr('value', value)
       .appendTo('#form-search')
 
 $ ->

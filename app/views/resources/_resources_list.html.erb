@@ -16,7 +16,7 @@
           <td><%= link_to resource[:name], resource[:url], target: '_blank' %></td>
           <td>
             <% resource[:tags].each do |tag_id| %>
-                <div class="label"><%= link_to @tags[tag_id], {action: :filtered_by, tag_id: tag_id} %></div>
+                <div class="label"><%= link_to @tags[tag_id], {action: :filtered_by, controller: :resources, tag_id: tag_id} %></div>
             <% end %>
           </td>
           <td>

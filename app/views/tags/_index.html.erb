@@ -3,6 +3,6 @@
   <div class="label">
     <%= @tags[tag_id] %>&nbsp<%=
       link_to '<i class="icon-remove icon-white"></i>'.html_safe,
-              tag_delete_path(tag_id), method: :delete %>
+              tag_delete_path(tag_id), method: :delete, remote:true %>
   </div>
 <% end %>
