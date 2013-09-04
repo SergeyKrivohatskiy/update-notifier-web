@@ -107,7 +107,8 @@ window.tagSearchSubmit = ->
     return false
   path = $('#form-search').attr('action')
   tag_id='?tag_id='+value
-  $.get(path+tag_id)
+  fadeIn()
+  $.get(path+tag_id).always(fadeOut())
   return false
 
 $ ->
