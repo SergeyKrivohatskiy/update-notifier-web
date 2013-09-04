@@ -100,19 +100,15 @@ $ ->
       modal_win.find('.errors').html(html_errors)
     )
 
-window.updateTagSearchSubmit = ->
-  $('#form-search').submit ->
-    input = $(this).find('input#tag_string')
-    value = window.invert_tags[input.val()]
-    if typeof value == 'undefined'
-      return false
-    path = $('#form-search').attr('action')
-    tag_id='?tag_id='+value
-    $.get(path+tag_id)
+window.tagSearchSubmit = ->
+  input = $('#form-search').find('input#tag_string')
+  value = window.invert_tags[input.val()]
+  if typeof value == 'undefined'
     return false
-
-$ ->
-  updateTagSearchSubmit()
+  path = $('#form-search').attr('action')
+  tag_id='?tag_id='+value
+  $.get(path+tag_id)
+  return false
 
 $ ->
   id = setInterval(( ->
