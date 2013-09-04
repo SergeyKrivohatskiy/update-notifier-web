@@ -43,13 +43,6 @@ class ResourcesController < ApplicationController
     session[:last_update] =  session[:last_update] || Time.new.to_s
   end
 
-  def show
-    resource_id = params[:id]
-    id = session[:user_id]
-    @resource = DatabaseHelper.get_resource(id, resource_id)
-    @tag_string = get_tags_string(@resource, DatabaseHelper.tags(id))
-  end
-
   def edit
     resource_id = params[:id]
     id = session[:user_id]

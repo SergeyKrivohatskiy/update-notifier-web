@@ -1,20 +1,21 @@
 UpdateNotifierFrontend::Application.routes.draw do
 
+  root to: 'static_pages#home'
+
   get 'sign_in', to: 'sessions#sign_in'
   get 'sign_out', to: 'sessions#sign_out'
   get 'error', to: 'sessions#signin_error'
 
-  resources :resources
+  resources :resources, except: :show
   get '/filter', to: 'resources#filtered_by'
   get '/update', to: 'resources#check_update'
 
-  root to: 'static_pages#home'
-
-  #get '/about', to: "static_pages#about"
-  get '/contact', to: "static_pages#contact"
+  get '/about', to: 'static_pages#about'
 
   post '/tags', to: 'tags#create'
-  delete '/tags/:id', to: 'tags#destroy', as:'tag_delete'
+  delete '/tags/:id', to: 'tags#destroy', as: :tag_delete
+
+  match '*other_path', to: redirect('/')
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

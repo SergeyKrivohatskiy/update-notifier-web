@@ -38,6 +38,18 @@ body {
 }
 
 header img {
-  margin-top: 2px;
-  max-width: 6.5%;
+  margin: 5px 0;
+  max-width: 7%;
+}
+
+header .pull-right a {
+  line-height: 2em;
+  font-size: 1.5em;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.guide {
+  font-size: 1.5em;
+  line-height: 1.3em;
 }
