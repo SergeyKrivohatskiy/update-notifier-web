@@ -5,6 +5,7 @@ class StaticPagesController < ApplicationController
   skip_before_filter :require_login, only: [:home]
 
   def home
+    redirect_to resources_path if session[:user]
     session[:redirect_url] = flash[:redirect_url]
   end
 
