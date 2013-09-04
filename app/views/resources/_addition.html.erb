@@ -1,4 +1,4 @@
-<div id="new-res-form" class="modal hide fade modal-thin" tabindex="-1" role="dialog"
+<div id="new-res-modal" class="modal hide fade modal-thin" tabindex="-1" role="dialog"
      aria-labelledby="NewResModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"
@@ -8,7 +8,7 @@
   </div>
   <div class="modal-body">
     <%= form_for :resource, url: resources_path, html: {
-            class: 'form-horizontal', id: 'new-resource-form'} do |f| %>
+            class: 'form-horizontal', id: 'new-res-form'} do |f| %>
         <div class="errors">
           <%= render partial: 'shared/errors' %>
         </div>

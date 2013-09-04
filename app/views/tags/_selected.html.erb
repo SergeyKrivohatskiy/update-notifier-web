@@ -1,15 +1,13 @@
-<div id="selected">
-  <% @selected_tags.each do |tag_id| %>
-      <div class="label label-info"><%= link_to "#{@tags[tag_id.to_i]
-      }&nbsp<i class='icon-remove icon-white' ></i>".html_safe,
-                                                {action: :filtered_by, controller: :resources,
-                                                 tag_id: tag_id} %></div>
-  <% end %>
-  <%= form_for :tag_search, url: {action: :filtered_by, controller: :resources}, html: {method: :get, class: 'form-search', id: 'form-search'} do |f| %>
-      <div class="input-append">
-        <%= text_field_tag :tag_string, nil, class: 'search-query input-small', placeholder: 'Type tag name',
-                           'data-provide' => 'typeahead', 'data-source' => "#{@tags.values}", rel: 'tooltip' %>
-        <%= f.submit 'Filter', id: 'search_btn', class: 'btn ' %>
-      </div>
-  <% end %>
-</div>
+<% @selected_tags.each do |tag_id| %>
+  <div class="label label-info"><%= link_to "#{@tags[tag_id.to_i]
+  }&nbsp<i class='icon-remove icon-white' ></i>".html_safe,
+                                            {action: :filtered_by, controller: :resources,
+                                             tag_id: tag_id, remote: true} %></div>
+<% end %>
+<%= form_for :tag_search, url: filter_url, html: {method: :get, class: 'form-search', id: 'form-search'} do |f| %>
+  <div class="input-append">
+    <%= text_field_tag :tag_string, nil, class: 'search-query input-small', placeholder: 'Type tag name',
+                       'data-provide' => 'typeahead', 'data-source' => "#{@tags.values}", rel: 'tooltip' %>
+    <%= f.submit 'Filter', id: 'search_btn', class: 'btn ' %>
+  </div>
+<% end %>

@@ -114,8 +114,14 @@ class ResourcesController < ApplicationController
           selected_tags.unshift selected_tag
         end
       end
+      #redirect_to :back
     end
-    redirect_to :back
+    id = session[:user_id]
+    @selected_tags = session[:selected_tags] || []
+    @tags = DatabaseHelper.tags(id)
+    tag_str = tags_to_url_param(@selected_tags.dup)
+    @resources = DatabaseHelper.resources(id, (tag_str.blank? ? nil : {tags: tag_str}))
+
   end
 
 end

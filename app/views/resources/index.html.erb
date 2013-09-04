@@ -1,17 +1,17 @@
 <% provide(:title, 'Resources') %>
 
 <%= javascript_tag do %>
-    window.invert_tags = <%= raw @invert_tags.to_json %>
+  window.invert_tags = <%= raw @invert_tags.to_json %>
 <% end %>
 
 <% content_for :inner_header do %>
-    <h1>Hello, <%= @name %>!</h1>
+  <h1>Hello, <%= @name %>!</h1>
 <% end %>
 
 <% content_for :sidebar do %>
-    <div id="sidebar" class="well">
-      <%= render 'tags/index' %>
-    </div>
+  <div id="sidebar" class="well">
+    <%= render 'tags/index' %>
+  </div>
 <% end %>
 
 <%= render 'resources/addition' %>
@@ -22,20 +22,21 @@
 
 <%= render 'tags/addition' %>
 
-<%= link_to 'Add resource', '#new-res-form',
+<%= link_to 'Add resource', '#new-res-modal',
             {role: 'button', class: 'btn', 'data-toggle' => 'modal'} %>
-<%= link_to 'Add tag', '#new-tag-form',
+<%= link_to 'Add tag', '#new-tag-modal',
             {role: 'button', class: 'btn', 'data-toggle' => 'modal'} %>
 
 <br/>
 
 <div class="selected-tags">
   <h4>Filtered by:</h4>
+
+  <div id="selected">
     <%= render partial: 'tags/selected' %>
+  </div>
 </div>
 
-<%= render 'shared/errors' %>
-
-<%= render partial: 'resources_list' %>
-
-<div id="empty"></div>
+<div id="resources">
+  <%= render partial: 'resources_list' %>
+</div>

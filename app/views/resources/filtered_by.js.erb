@@ -1,0 +1,5 @@
+$(function () {
+  $('#selected').html('<%= escape_javascript(render partial: 'tags/selected').html_safe %>');
+  $('#resources').html('<%= escape_javascript(render partial: 'resources/resources_list').html_safe %>');
+  updateTagSearchSubmit();
+});

@@ -4,6 +4,8 @@
 
 $ ->
   $('#new-res-submit').click ->
+    modal_win = $('#new-res-modal')
+    form = $('#new-res-form')
     fadeIn()
     $.post(
       window.location.href,
@@ -18,9 +20,9 @@ $ ->
       }
     ).done( ->
       fadeOut()
-      $('#new-res-form').modal('hide')
-      $('#new-res-form').find('form')[0].reset()
-      $('#new-res-form').find('.errors').html('')
+      modal_win.modal('hide')
+      form[0].reset()
+      modal_win.find('.errors').html('')
     ).fail((response) ->
       fadeOut()
       html_errors = '<div class="alert alert-error"><ul>'
@@ -30,7 +32,7 @@ $ ->
         html_errors+='</li>'
       )
       html_errors+='</ul></div>'
-      $('#new-res-form').find('.errors').html(html_errors)
+      modal_win.find('.errors').html(html_errors)
     )
 
 window.submitEdition = ->
@@ -71,18 +73,46 @@ window.submitEdition = ->
 
 $ ->
   $('#new-tag-submit').click ->
-    $('#new-tag-form').submit()
+    modal_win = $('#new-tag-modal')
+    form = $('#new-tag-form')
+    fadeIn()
+    $.post(
+      window.location.href,
+    {
+      tag: {
+        name: $('#tag_name').val(),
+      }
+    }
+    ).done( ->
+      fadeOut()
+      modal_win.modal('hide')
+      modal_win.find('form')[0].reset()
+      modal_win.find('.errors').html('')
+    ).fail((response) ->
+      fadeOut()
+      html_errors = '<div class="alert alert-error"><ul>'
+      $.each(response.responseJSON, (index, value) ->
+        html_errors+='<li>'
+        html_errors+=value
+        html_errors+='</li>'
+      )
+      html_errors+='</ul></div>'
+      modal_win.find('.errors').html(html_errors)
+    )
 
-$ ->
+window.updateTagSearchSubmit = ->
   $('#form-search').submit ->
     input = $(this).find('input#tag_string')
     value = window.invert_tags[input.val()]
     if typeof value == 'undefined'
       return false
-    $('<input />').attr('type', 'hidden')
-      .attr('name', 'tag_id')
-      .attr('value', value)
-      .appendTo('#form-search')
+    path = $('#form-search').attr('action')
+    tag_id='?tag_id='+value
+    $.get(path+tag_id)
+    return false
+
+$ ->
+  updateTagSearchSubmit()
 
 $ ->
   id = setInterval(( ->

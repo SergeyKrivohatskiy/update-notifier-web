@@ -13,7 +13,7 @@ UpdateNotifierFrontend::Application.routes.draw do
   #get '/about', to: "static_pages#about"
   get '/contact', to: "static_pages#contact"
 
-  post '/tags', to: 'tags#create', as: 'new_tag'
+  post '/tags', to: 'tags#create'
   delete '/tags/:id', to: 'tags#destroy', as:'tag_delete'
 
   # The priority is based upon order of creation:
