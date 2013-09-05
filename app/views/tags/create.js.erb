@@ -1,0 +1,5 @@
+$(function () {
+    <% if @errors_array.blank? %>
+    $('#sidebar').html('<%= escape_javascript(render partial: 'tags/index').html_safe %>');
+    <% end %>
+});

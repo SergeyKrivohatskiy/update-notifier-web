@@ -7,7 +7,7 @@
     <h3 id="NewResModalLabel">Add new resource</h3>
   </div>
   <div class="modal-body">
-    <%= form_for :resource, url: resources_path, html: {
+    <%= form_for :resource, url: resources_url, html: {
             class: 'form-horizontal', id: 'new-res-form'} do |f| %>
         <div class="errors">
           <%= render partial: 'shared/errors' %>

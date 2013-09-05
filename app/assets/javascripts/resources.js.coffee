@@ -8,7 +8,7 @@ $ ->
     form = $('#new-res-form')
     fadeIn()
     $.post(
-      window.location.href,
+      form.attr('action'),
       {
         resource: {
           name: $('#resource_name').val(),
@@ -77,7 +77,7 @@ $ ->
     form = $('#new-tag-form')
     fadeIn()
     $.post(
-      window.location.href,
+      form.attr('action'),
     {
       tag: {
         name: $('#tag_name').val(),
@@ -99,6 +99,7 @@ $ ->
       html_errors+='</ul></div>'
       modal_win.find('.errors').html(html_errors)
     )
+    return false;
 
 window.tagSearchSubmit = ->
   input = $('#form-search').find('input#tag_string')

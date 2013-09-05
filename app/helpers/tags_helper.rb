@@ -28,17 +28,20 @@ module TagsHelper
 
     tag_ids.compact!
 
+    error_messages = []
     new_tags.each do |tag_name|
       # TODO exception if is not valid and not add resource
       tag = Tag.new({user_id: user_id, name: tag_name})
       if tag.valid?
         tag_id = DatabaseHelper.add_tag(tag).to_i
         tag_ids.push(tag_id) if tag_id > 0
-      #else
-      #  raise ValidationError, tag.errors.full_messages
+      else
+        tag.errors.full_messages.each do |error|
+          error_messages.push "#{tag_name}: #{error}"
+        end
       end
     end
-    tag_ids
+    error_messages
   end
 
   def tags_to_url_param(tags_id_array)

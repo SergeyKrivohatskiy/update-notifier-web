@@ -2,5 +2,6 @@ $(function () {
     <% if @errors_array.blank? %>
     $('#resources').html('<%= escape_javascript(render partial: 'resources_list').html_safe %>');
     $('#sidebar').html('<%= escape_javascript(render partial: 'tags/index').html_safe %>');
+    $('#selected').html('<%= escape_javascript(render partial: 'tags/selected') %>')
     <% end %>
 });

@@ -14,8 +14,8 @@ class ResourcesController < ApplicationController
     if resource.valid?
       DatabaseHelper.add_resource(resource)
       @tags = DatabaseHelper.tags(id)
-      selected_tags = session[:selected_tags] || []
-      tag_str = tags_to_url_param(selected_tags.dup)
+      @selected_tags = session[:selected_tags] || []
+      tag_str = tags_to_url_param(@selected_tags.dup)
       @resources = DatabaseHelper.resources(id, (tag_str.blank? ? nil : {tags: tag_str}))
     else
       @errors_array = resource.errors.full_messages

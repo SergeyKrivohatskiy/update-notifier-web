@@ -7,12 +7,15 @@
     <h3 id="NewTagModalLabel">Add new tag (or tags)</h3>
   </div>
   <div class="modal-body">
-    <%= form_for :tag, url: tags_path, html: {
+    <%= form_for :tag, url: tags_url, html: {
             class: 'form-horizontal', id: 'new-tag-form'} do |f| %>
-      Add new tag (or tags):
-      <div class="control-group">
-        <%= f.text_field :name, placeholder: 'Name' %>
-      </div>
+        <div class="errors">
+          <%= render partial: 'shared/errors' %>
+        </div>
+        Add new tag (or tags):
+        <div class="control-group">
+          <%= f.text_field :name, placeholder: 'Name' %>
+        </div>
     <% end %>
   </div>
   <div class="modal-footer">

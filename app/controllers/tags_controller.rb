@@ -4,10 +4,14 @@ class TagsController < ApplicationController
   def create
     id = session[:user_id]
     tag_string = params[:tag][:name]
-    tags = add_new_tags(tag_string, id)
+    @errors_array = add_new_tags(tag_string, id)
 
-    #redirect_to :back, flash: { errors: errors_array }
-    redirect_to :back
+    if @errors_array.blank?
+      @tags = DatabaseHelper.tags(id)
+    else
+      render status: :bad_request, json: @errors_array
+    end
+
   end
 
   def destroy
