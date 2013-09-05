@@ -53,3 +53,8 @@ header .pull-right a {
   font-size: 1.5em;
   line-height: 1.3em;
 }
+
+.breakable {
+  word-break: break-all;
+  overflow: hidden;
+}
