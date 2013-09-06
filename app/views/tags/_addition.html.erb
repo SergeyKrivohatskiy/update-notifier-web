@@ -1,16 +1,15 @@
-<div id="new-tag-modal" class="modal hide fade modal-thin" tabindex="-1" role="dialog"
+<div id="new-tag-modal" class="modal modal-win hide fade modal-thin" tabindex="-1" role="dialog"
      aria-labelledby="NewTagModalLabel" aria-hidden="true">
   <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal"
+    <button type="button" class="close modal-close"
             aria-hidden="true">×
     </button>
     <h3 id="NewTagModalLabel">Add new tag (or tags)</h3>
   </div>
   <div class="modal-body">
     <%= form_for :tag, url: tags_url, html: {
-            class: 'form-horizontal', id: 'new-tag-form'} do |f| %>
+            class: 'form-horizontal modal-form', id: 'new-tag-form'} do |f| %>
         <div class="errors">
-          <%= render partial: 'shared/errors' %>
         </div>
         Add new tag (or tags):
         <div class="control-group">
@@ -20,6 +19,6 @@
   </div>
   <div class="modal-footer">
     <button id="new-tag-submit" class="btn btn-primary" aria-hidden="true">Add</button>
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn modal-close" aria-hidden="true">Close</button>
   </div>
 </div>
