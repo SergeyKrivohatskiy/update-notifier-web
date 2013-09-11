@@ -58,6 +58,11 @@ window.formSubmit = (sbmtBtnId, modalWinId, formId, dataHashFnc) ->
     )
   return false
 
+window.tagTruncation = ->
+  $('#sidebar .label-text').each ->
+    if $(this).text().length > 18
+      $(this).text($(this).text().substr(0,14)+'...')
+
 $ ->
   $('.modal-close').each(->
     $(this).click(->
