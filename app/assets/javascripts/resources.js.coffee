@@ -2,6 +2,12 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+window.fadeIn = ->
+  $('body').append('<div class="my-modal-backdrop"></div> ')
+
+window.fadeOut = ->
+  $('.my-modal-backdrop').remove()
+
 window.tagData = ->
   tag: { name: $('#tag_name').val() }
 
@@ -50,6 +56,7 @@ window.formSubmit = (sbmtBtnId, modalWinId, formId, dataHashFnc) ->
       htmlErr = errorMessageConstructor(response);
       modalWin.find('.errors').html(htmlErr)
     )
+  return false
 
 $ ->
   $('.modal-close').each(->

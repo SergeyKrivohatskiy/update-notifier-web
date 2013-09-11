@@ -4,7 +4,7 @@ class TagsController < ApplicationController
   def create
     id = session[:user_id]
     tag_string = params[:tag][:name]
-    @errors_array = add_new_tags(tag_string, id)
+    tag_ids, @errors_array = add_new_tags(tag_string, id)
 
     if @errors_array.blank?
       @tags = DatabaseHelper.tags(id)

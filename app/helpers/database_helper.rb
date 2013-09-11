@@ -52,6 +52,7 @@ module DatabaseHelper
   end
 
   def self.get_updated(user_id, time)
+    return nil unless time && user_id
     response = HTTPartyWrapper::get("#{user_id}/updated", time)
     if WEBrick::HTTPStatus[response.code].new.
         kind_of? WEBrick::HTTPStatus::Success

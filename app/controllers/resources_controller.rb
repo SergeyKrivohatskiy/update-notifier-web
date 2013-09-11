@@ -5,20 +5,21 @@ class ResourcesController < ApplicationController
   def create
     id = session[:user_id]
     tags = DatabaseHelper.tags(id)
+    @errors_array = []
     resource_info = params[:resource]
-    resource_info[:tags] = add_new_tags(resource_info[:tags], id)
+    resource_info[:tags], @errors_array = add_new_tags(resource_info[:tags], id)
     resource_info[:schedule_code] = ResourcesHelper.schedule_codes.index(resource_info[:schedule_code])
     resource = Resource.new(resource_info)
     resource.user_id = id
 
-    if resource.valid?
+    if resource.valid? && @errors_array.blank?
       DatabaseHelper.add_resource(resource)
       @tags = DatabaseHelper.tags(id)
       @selected_tags = session[:selected_tags] || []
       tag_str = tags_to_url_param(@selected_tags.dup)
       @resources = DatabaseHelper.resources(id, (tag_str.blank? ? nil : {tags: tag_str}))
     else
-      @errors_array = resource.errors.full_messages
+      @errors_array = resource.errors.full_messages + @errors_array
       render status: :bad_request, json: @errors_array
     end
   end
@@ -55,21 +56,22 @@ class ResourcesController < ApplicationController
   def update
     id = session[:user_id]
     tags = DatabaseHelper.tags(id)
+    @errors_array = []
     resource_info = params[:resource]
     if resource_info
-      resource_info[:tags] = add_new_tags(resource_info[:tags], id)
+      resource_info[:tags], @errors_array = add_new_tags(resource_info[:tags], id)
       resource_info[:id] = params[:id]
       resource_info[:user_id] = id
       resource_info[:schedule_code] = ResourcesHelper.schedule_codes.index(resource_info[:schedule_code])
       resource = Resource.new(resource_info)
-      if resource.valid?
+      if resource.valid? && @errors_array.blank?
         DatabaseHelper.edit_resource(resource)
         @tags = DatabaseHelper.tags(id)
-        selected_tags = session[:selected_tags] || []
-        tag_str = tags_to_url_param(selected_tags.dup)
+        @selected_tags = session[:selected_tags] || []
+        tag_str = tags_to_url_param(@selected_tags.dup)
         @resources = DatabaseHelper.resources(id, (tag_str.blank? ? nil : {tags: tag_str}))
       else
-        @errors_array = resource.errors.full_messages
+        @errors_array = resource.errors.full_messages + @errors_array
         render status: :bad_request, json: @errors_array
       end
     end
@@ -77,10 +79,16 @@ class ResourcesController < ApplicationController
   end
 
   def check_update
-    res_id = DatabaseHelper.get_updated(session[:user_id], { time: session[:last_update] })
-    session[:last_update] = Time.new.to_s
-    if res_id
-      render json: res_id
+    if session[:user_id] && session[:last_update]
+      res_id = DatabaseHelper.get_updated(session[:user_id], { time: session[:last_update] })
+      session[:last_update] = Time.new.to_s
+      if res_id
+        render json: res_id
+      else
+        render nothing: true
+      end
+    else
+      render nothing: true
     end
   end
 
